@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="454.0" prefWidth="600.0" style="-fx-background-color: #dacddc;" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.FavouritesController">
+<AnchorPane maxHeight="465.0" maxWidth="600.0" minHeight="465.0" minWidth="600.0" prefHeight="465.0" prefWidth="600.0" style="-fx-background-color: #dacddc;" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.FavouritesController">
 
     <children>
         <AnchorPane layoutX="23.0" prefHeight="82.0" prefWidth="82.0" style="-fx-background-color: #22a7f0;">
@@ -29,20 +29,29 @@
             </children></AnchorPane>
         <JFXButton layoutX="491.0" layoutY="400.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="95.0" style="-fx-border-color: #22a7f0;" text="Back" />
       <JFXTreeTableView layoutX="23.0" layoutY="94.0" prefHeight="346.0" prefWidth="452.0" />
-      <JFXButton contentDisplay="GRAPHIC_ONLY" layoutX="508.0" layoutY="156.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="40.0" text="Button">
+      <JFXButton buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" layoutX="508.0" layoutY="156.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="40.0" styleClass="round_btn" stylesheets="@../css/round_btn.css" text="Button">
          <graphic>
             <ImageView fitHeight="29.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../icons/delete-512.png" />
+                  <Image url="@../icons/folder.png" />
                </image>
             </ImageView>
          </graphic>
       </JFXButton>
-      <JFXButton contentDisplay="GRAPHIC_ONLY" layoutX="508.0" layoutY="208.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="40.0" text="Button">
+      <JFXButton buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" layoutX="508.0" layoutY="213.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="40.0" styleClass="round_btn" stylesheets="@../css/round_btn.css" text="Button">
          <graphic>
             <ImageView fitHeight="29.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../icons/delete-512.png" />
+                  <Image url="@../icons/ic_delete_black_24dp_2x.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <JFXButton buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" layoutX="508.0" layoutY="268.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="40.0" styleClass="round_btn" stylesheets="@../css/round_btn.css" text="Button">
+         <graphic>
+            <ImageView fitHeight="29.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icons/ic_delete_forever_black_24dp_2x.png" />
                </image>
             </ImageView>
          </graphic>

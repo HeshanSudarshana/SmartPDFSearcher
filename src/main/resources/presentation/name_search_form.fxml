@@ -1,14 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDrawer?>
+<?import com.jfoenix.controls.JFXHamburger?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXToggleButton?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="controllers.NameSearchFormController"
-            prefHeight="400.0" prefWidth="600.0">
+<AnchorPane maxHeight="600.0" maxWidth="800.0" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #dacddc;" stylesheets="@../css/search_forms.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.NameSearchFormController">
 
+    <children>
+        <AnchorPane layoutX="23.0" prefHeight="97.0" prefWidth="97.0" style="-fx-background-color: #22a7f0;">
+            <children>
+                <ImageView fitHeight="78.0" fitWidth="78.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../icons/open-book-icon-32.png" />
+                    </image>
+                </ImageView>
+            </children></AnchorPane>
+        <AnchorPane layoutX="120.0" layoutY="22.0" prefHeight="53.0" prefWidth="245.0" style="-fx-background-color: #22a7f0;">
+            <children>
+                <Label layoutX="22.0" layoutY="14.0" text="Search By Name" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="22.0" />
+                    </font>
+                </Label>
+            </children></AnchorPane>
+      <JFXHamburger fx:id="sidebarHam" alignment="CENTER" layoutX="710.0" onMouseClicked="#sidebarHamClicked" prefHeight="97.0" prefWidth="90.0" styleClass="jfx-hamburger" />
+      <AnchorPane layoutX="23.0" layoutY="109.0" prefHeight="97.0" prefWidth="685.0" styleClass="container_pane">
+         <children>
+            <JFXTextField alignment="CENTER" layoutX="57.0" layoutY="26.0" prefHeight="45.0" prefWidth="476.0" promptText="Select a Directory to Search" />
+            <JFXButton layoutX="543.0" layoutY="26.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="107.0" text="Browse.." />
+         </children></AnchorPane>
+      <AnchorPane layoutX="23.0" layoutY="223.0" prefHeight="355.0" prefWidth="685.0" styleClass="container_pane">
+         <children>
+            <JFXTreeTableView layoutX="15.0" layoutY="78.0" prefHeight="263.0" prefWidth="656.0" />
+            <JFXTextField alignment="CENTER" layoutX="17.0" layoutY="15.0" prefHeight="45.0" prefWidth="352.0" promptText="Enter Search Content" />
+            <JFXButton contentDisplay="GRAPHIC_ONLY" layoutX="394.0" layoutY="15.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="46.0" styleClass="round_btn" stylesheets="@../css/round_btn.css" text="Search">
+               <graphic>
+                  <ImageView fitHeight="29.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/ic_search_black_24dp_2x.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXToggleButton layoutX="461.0" layoutY="7.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="209.0" text="Save to Directory" />
+         </children></AnchorPane>
+      <JFXButton contentDisplay="GRAPHIC_ONLY" layoutX="732.0" layoutY="438.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="46.0" styleClass="round_btn" stylesheets="@../css/round_btn.css" text="Search">
+         <graphic>
+            <ImageView fitHeight="29.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icons/ic_favorite_border_black_24dp_2x.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <JFXButton contentDisplay="GRAPHIC_ONLY" layoutX="732.0" layoutY="533.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="46.0" styleClass="round_btn" stylesheets="@../css/round_btn.css" text="Search">
+         <graphic>
+            <ImageView fitHeight="29.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icons/256x256-ios7-back-icon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <JFXDrawer fx:id="sidebarDrawer" defaultDrawerSize="85.0" layoutX="830.0" layoutY="97.0" prefHeight="300.0" prefWidth="85.0" />
+    </children>
 </AnchorPane>

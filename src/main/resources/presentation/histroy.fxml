@@ -1,16 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="controllers.HistoryController"
-            prefHeight="400.0" prefWidth="600.0">
+<AnchorPane maxHeight="465.0" maxWidth="600.0" minHeight="465.0" minWidth="600.0" prefHeight="465.0" prefWidth="600.0" style="-fx-background-color: #dacddc;" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.HistoryController">
 
-
+    <children>
+        <AnchorPane layoutX="23.0" prefHeight="82.0" prefWidth="82.0" style="-fx-background-color: #22a7f0;">
+            <children>
+                <ImageView fitHeight="73.0" fitWidth="97.0" layoutX="5.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../icons/open-book-icon-32.png" />
+                    </image>
+                </ImageView>
+            </children></AnchorPane>
+        <AnchorPane layoutX="105.0" layoutY="15.0" prefHeight="53.0" prefWidth="129.0" style="-fx-background-color: #22a7f0;">
+            <children>
+                <Label layoutX="22.0" layoutY="14.0" text="History" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="22.0" />
+                    </font>
+                </Label>
+            </children></AnchorPane>
+        <JFXButton layoutX="491.0" layoutY="400.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="95.0" style="-fx-border-color: #22a7f0;" text="Back" />
+        <JFXTreeTableView layoutX="23.0" layoutY="94.0" prefHeight="346.0" prefWidth="452.0" />
+        <JFXButton buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" layoutX="508.0" layoutY="156.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="40.0" styleClass="round_btn" stylesheets="@../css/round_btn.css" text="Button">
+            <graphic>
+                <ImageView fitHeight="29.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../icons/ic_search_black_24dp_2x.png" />
+                    </image>
+                </ImageView>
+            </graphic>
+        </JFXButton>
+        <JFXButton buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" layoutX="508.0" layoutY="213.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="40.0" styleClass="round_btn" stylesheets="@../css/round_btn.css" text="Button">
+            <graphic>
+                <ImageView fitHeight="29.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../icons/ic_delete_black_24dp_2x.png" />
+                    </image>
+                </ImageView>
+            </graphic>
+        </JFXButton>
+        <JFXButton buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" layoutX="508.0" layoutY="268.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="40.0" styleClass="round_btn" stylesheets="@../css/round_btn.css" text="Button">
+            <graphic>
+                <ImageView fitHeight="29.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../icons/ic_delete_forever_black_24dp_2x.png" />
+                    </image>
+                </ImageView>
+            </graphic>
+        </JFXButton>
+    </children>
 
 </AnchorPane>

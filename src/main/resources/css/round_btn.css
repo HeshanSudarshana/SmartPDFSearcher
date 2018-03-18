@@ -1,0 +1,8 @@
+.round_btn {
+    -fx-background-radius: 45, 40;
+    -fx-background-insets: -5, 0;
+    -fx-border-radius: 38;
+    -fx-border-width: 2;
+    -fx-border-color: #22a7f0;
+
+}

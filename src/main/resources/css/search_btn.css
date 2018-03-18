@@ -4,4 +4,6 @@
     -fx-pref-width: 350px;
     -fx-pref-height: 60px;
     -fx-border-color: #22a7f0;
+    -fx-border-radius: 20 20 20 20;
+    -fx-background-radius: 20 20 20 20;
 }

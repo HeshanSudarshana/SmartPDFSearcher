@@ -1,0 +1,10 @@
+.jfx-hamburger StackPane {
+    -fx-background-color: #22a7f0;
+    -fx-pref-height: 3px;
+}
+
+.container_pane {
+    -fx-border-radius: 10 0 10 0;
+    -fx-background-radius: 10 0 10 0;
+    -fx-border-color: #22a7f0;
+}
