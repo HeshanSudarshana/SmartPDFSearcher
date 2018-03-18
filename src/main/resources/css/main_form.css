@@ -1,0 +1,18 @@
+/*.jfx-tab-pane .tab-header-area .jfx-rippler{*/
+    /*-jfx-rippler-fill : #F28369;*/
+/*}*/
+/*.jfx-tab-pane .tab-selected-line{*/
+    /*-fx-stroke : #F28369;*/
+/*}*/
+
+
+.jfx-tab-pane .headers-region {
+    -fx-background-color: #F28369;
+}
+.jfx-tab-pane .tab-header-background {
+    -fx-background-color: #F28369;
+}
+.jfx-tab-pane .tab-selected-line {
+    -fx-stroke: #802a00;
+    -fx-stroke-width: 3pt;
+}

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<?import javafx.scene.control.Tooltip?>
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.EditUserFormController">
+
+    <children>
+        <AnchorPane layoutX="23.0" prefHeight="82.0" prefWidth="82.0" style="-fx-background-color: #22a7f0;">
+            <children>
+                <ImageView fitHeight="73.0" fitWidth="97.0" layoutX="5.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../icons/open-book-icon-32.png" />
+                    </image>
+                </ImageView>
+            </children></AnchorPane>
+        <AnchorPane layoutX="105.0" layoutY="15.0" prefHeight="53.0" prefWidth="342.0" style="-fx-background-color: #22a7f0;">
+            <children>
+                <Label layoutX="22.0" layoutY="14.0" text="Change Acount Settings" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="22.0" />
+                    </font>
+                </Label>
+            </children></AnchorPane>
+        <JFXTextField alignment="CENTER" focusColor="#22a7f0" labelFloat="true" layoutX="145.0" layoutY="109.0" prefHeight="30.0" prefWidth="310.0" promptText="Change Username" unFocusColor="BLACK" />
+        <JFXTextField alignment="CENTER" focusColor="#22a7f0" labelFloat="true" layoutX="145.0" layoutY="155.0" prefHeight="30.0" prefWidth="310.0" promptText="Change Password" />
+        <JFXButton layoutX="183.0" layoutY="325.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="117.0" style="-fx-border-color: #22a7f0;" text="Save Changes" wrapText="true" />
+        <JFXButton layoutX="328.0" layoutY="325.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="95.0" style="-fx-border-color: #22a7f0;" text="Cancel" />
+        <JFXTextField alignment="CENTER" focusColor="#22a7f0" labelFloat="true" layoutX="145.0" layoutY="201.0" prefHeight="30.0" prefWidth="310.0" promptText="Confirm Password" />
+        <JFXTextField alignment="CENTER" focusColor="#22a7f0" labelFloat="true" layoutX="145.0" layoutY="258.0" prefHeight="30.0" prefWidth="310.0" promptText="Change the Workspace" />
+        <JFXButton layoutX="458.0" layoutY="253.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="42.0" text="..." wrapText="true">
+            <font>
+                <Font size="15.0" />
+            </font>
+        </JFXButton>
+      <JFXButton contentDisplay="GRAPHIC_ONLY" layoutX="513.0" layoutY="15.0" mnemonicParsing="false" prefHeight="73.0" prefWidth="73.0" style="-fx-border-color: #22a7f0;" text="Cancel">
+          <tooltip>
+              <Tooltip text="Search Page" />
+          </tooltip>
+         <graphic>
+            <ImageView fitHeight="55.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icons/delete-user-512.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+    </children>
+
+</AnchorPane>
