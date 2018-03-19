@@ -25,7 +25,7 @@
          </children></AnchorPane>
       <AnchorPane fx:id="buttonPane" layoutX="409.0" prefHeight="600.0" prefWidth="391.0">
          <children>
-            <JFXButton contentDisplay="GRAPHIC_ONLY" focusTraversable="false" layoutX="308.0" mnemonicParsing="false" prefHeight="71.0" prefWidth="83.0" ripplerFill="BLACK" text="Button">
+            <JFXButton fx:id="loginBtn" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" layoutX="308.0" mnemonicParsing="false" onAction="#loginBtnAction" prefHeight="71.0" prefWidth="83.0" ripplerFill="BLACK" text="Button">
                <graphic>
                   <ImageView fitHeight="55.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -35,7 +35,7 @@
                </graphic>
                <tooltip><Tooltip text="Login to Access Advance Features" /></tooltip>
             </JFXButton>
-            <JFXButton contentDisplay="GRAPHIC_ONLY" focusTraversable="false" layoutX="142.0" mnemonicParsing="false" prefHeight="71.0" prefWidth="83.0" ripplerFill="BLACK" text="Button">
+            <JFXButton fx:id="infoBtn" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" layoutX="142.0" mnemonicParsing="false" onAction="#infoBtnAction" prefHeight="71.0" prefWidth="83.0" ripplerFill="BLACK" text="Button">
                <graphic>
                   <ImageView fitHeight="55.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -60,7 +60,7 @@
                   <Font name="Serif Regular" size="24.0" />
                </font>
             </JFXButton>
-            <JFXButton contentDisplay="GRAPHIC_ONLY" focusTraversable="false" layoutX="225.0" mnemonicParsing="false" prefHeight="71.0" prefWidth="83.0" ripplerFill="BLACK" text="Button">
+            <JFXButton fx:id="createAccBtn" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" layoutX="225.0" mnemonicParsing="false" onAction="#createAccBtnAction" prefHeight="71.0" prefWidth="83.0" ripplerFill="BLACK" text="Button">
                <tooltip>
                   <Tooltip text="Create an Account" />
                </tooltip>

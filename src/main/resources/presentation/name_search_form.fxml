@@ -4,7 +4,6 @@
 <?import com.jfoenix.controls.JFXDrawer?>
 <?import com.jfoenix.controls.JFXHamburger?>
 <?import com.jfoenix.controls.JFXTextField?>
-<?import com.jfoenix.controls.JFXToggleButton?>
 <?import com.jfoenix.controls.JFXTreeTableView?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
@@ -34,14 +33,14 @@
       <JFXHamburger fx:id="sidebarHam" alignment="CENTER" layoutX="710.0" onMouseClicked="#sidebarHamClicked" prefHeight="97.0" prefWidth="90.0" styleClass="jfx-hamburger" />
       <AnchorPane layoutX="23.0" layoutY="109.0" prefHeight="97.0" prefWidth="685.0" styleClass="container_pane">
          <children>
-            <JFXTextField alignment="CENTER" layoutX="57.0" layoutY="26.0" prefHeight="45.0" prefWidth="476.0" promptText="Select a Directory to Search" />
-            <JFXButton layoutX="543.0" layoutY="26.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="107.0" text="Browse.." />
+            <JFXTextField alignment="CENTER" editable="false" focusTraversable="false" labelFloat="true" layoutX="57.0" layoutY="26.0" prefHeight="45.0" prefWidth="476.0" promptText="Select a Directory to Search" />
+            <JFXButton focusTraversable="false" layoutX="543.0" layoutY="26.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="107.0" text="Browse.." />
          </children></AnchorPane>
-      <AnchorPane layoutX="23.0" layoutY="223.0" prefHeight="355.0" prefWidth="685.0" styleClass="container_pane">
+      <AnchorPane fx:id="searchPane" layoutX="23.0" layoutY="223.0" prefHeight="355.0" prefWidth="685.0" styleClass="container_pane">
          <children>
-            <JFXTreeTableView layoutX="15.0" layoutY="78.0" prefHeight="263.0" prefWidth="656.0" />
-            <JFXTextField alignment="CENTER" layoutX="17.0" layoutY="15.0" prefHeight="45.0" prefWidth="352.0" promptText="Enter Search Content" />
-            <JFXButton contentDisplay="GRAPHIC_ONLY" layoutX="394.0" layoutY="15.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="46.0" styleClass="round_btn" stylesheets="@../css/round_btn.css" text="Search">
+            <JFXTreeTableView layoutX="15.0" layoutY="86.0" prefHeight="255.0" prefWidth="656.0" />
+            <JFXTextField alignment="CENTER" focusTraversable="false" labelFloat="true" layoutX="15.0" layoutY="23.0" prefHeight="45.0" prefWidth="352.0" promptText="Enter Search Content" />
+            <JFXButton contentDisplay="GRAPHIC_ONLY" focusTraversable="false" layoutX="394.0" layoutY="23.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="46.0" styleClass="round_btn" stylesheets="@../css/round_btn.css" text="Search">
                <graphic>
                   <ImageView fitHeight="29.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -50,11 +49,19 @@
                   </ImageView>
                </graphic>
             </JFXButton>
-            <JFXToggleButton layoutX="461.0" layoutY="7.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="209.0" text="Save to Directory" />
+            <JFXButton fx:id="advanceBtn" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" layoutX="533.0" layoutY="23.0" mnemonicParsing="false" onAction="#advanceButtonAction" prefHeight="45.0" prefWidth="46.0" styleClass="round_btn" stylesheets="@../css/round_btn.css" text="Search">
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/ic_expand_more_black_24dp_2x.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
          </children></AnchorPane>
       <JFXButton contentDisplay="GRAPHIC_ONLY" layoutX="732.0" layoutY="438.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="46.0" styleClass="round_btn" stylesheets="@../css/round_btn.css" text="Search">
          <graphic>
-            <ImageView fitHeight="29.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="heartIcon" fitHeight="29.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../icons/ic_favorite_border_black_24dp_2x.png" />
                </image>

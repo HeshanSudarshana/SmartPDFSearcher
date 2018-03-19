@@ -6,3 +6,10 @@
     -fx-border-color: #22a7f0;
 
 }
+
+.toggle-button {
+    -fx-background-color: #dacddc;
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+    -fx-border-color: #22a7f0;
+}
