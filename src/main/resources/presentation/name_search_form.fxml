@@ -68,11 +68,11 @@
             </ImageView>
          </graphic>
       </JFXButton>
-      <JFXButton contentDisplay="GRAPHIC_ONLY" layoutX="732.0" layoutY="533.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="46.0" styleClass="round_btn" stylesheets="@../css/round_btn.css" text="Search">
+      <JFXButton fx:id="backBtn" contentDisplay="GRAPHIC_ONLY" layoutX="732.0" layoutY="533.0" mnemonicParsing="false" onAction="#backBtnAction" prefHeight="45.0" prefWidth="46.0" styleClass="round_btn" stylesheets="@../css/round_btn.css" text="Search">
          <graphic>
             <ImageView fitHeight="29.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../icons/256x256-ios7-back-icon.png" />
+                  <Image url="@../icons/arrow-left.png" />
                </image>
             </ImageView>
          </graphic>

@@ -33,7 +33,7 @@
         <JFXButton layoutX="183.0" layoutY="325.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="117.0" style="-fx-border-color: #22a7f0;" text="Save Changes" wrapText="true" />
         <JFXButton layoutX="328.0" layoutY="325.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="95.0" style="-fx-border-color: #22a7f0;" text="Cancel" />
         <JFXTextField alignment="CENTER" focusColor="#22a7f0" labelFloat="true" layoutX="145.0" layoutY="201.0" prefHeight="30.0" prefWidth="310.0" promptText="Confirm Password" />
-        <JFXTextField alignment="CENTER" focusColor="#22a7f0" labelFloat="true" layoutX="145.0" layoutY="253.0" prefHeight="30.0" prefWidth="310.0" promptText="Change the Workspace" />
+        <JFXTextField alignment="CENTER" editable="false" focusColor="#22a7f0" labelFloat="true" layoutX="145.0" layoutY="253.0" prefHeight="30.0" prefWidth="310.0" promptText="Change the Workspace" />
         <JFXButton layoutX="471.0" layoutY="248.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="42.0" text="..." wrapText="true">
             <font>
                 <Font size="15.0" />
