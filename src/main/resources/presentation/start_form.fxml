@@ -23,23 +23,23 @@
                </font>
             </Label>
          </children></AnchorPane>
-      <AnchorPane fx:id="buttonPane" layoutX="409.0" prefHeight="600.0" prefWidth="391.0">
+      <AnchorPane fx:id="buttonPane" layoutX="409.0" prefHeight="600.0" prefWidth="391.0" stylesheets="@../css/round_btn.css">
          <children>
-            <JFXButton fx:id="loginBtn" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" layoutX="308.0" mnemonicParsing="false" onAction="#loginBtnAction" prefHeight="71.0" prefWidth="83.0" ripplerFill="BLACK" text="Button">
+            <JFXButton fx:id="loginBtn" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" layoutX="307.0" layoutY="11.0" mnemonicParsing="false" onAction="#loginBtnAction" prefHeight="29.0" prefWidth="50.0" ripplerFill="BLACK" styleClass="round_btn" text="Button">
                <graphic>
-                  <ImageView fitHeight="55.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../icons/img_311846.png" />
+                        <Image url="@../icons/account.png" />
                      </image>
                   </ImageView>
                </graphic>
                <tooltip><Tooltip text="Login to Access Advance Features" /></tooltip>
             </JFXButton>
-            <JFXButton fx:id="infoBtn" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" layoutX="142.0" mnemonicParsing="false" onAction="#infoBtnAction" prefHeight="71.0" prefWidth="83.0" ripplerFill="BLACK" text="Button">
+            <JFXButton fx:id="infoBtn" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" layoutX="145.0" layoutY="11.0" mnemonicParsing="false" onAction="#infoBtnAction" prefHeight="62.0" prefWidth="70.0" ripplerFill="BLACK" styleClass="round_btn" text="Button">
                <graphic>
-                  <ImageView fitHeight="55.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../icons/Information-icon.png" />
+                        <Image url="@../icons/information-outline.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -50,9 +50,9 @@
                   <Tooltip text="Search Page" />
                </tooltip>
                <graphic>
-                  <ImageView fx:id="nextSearchIcon" fitHeight="64.0" fitWidth="66.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="nextSearchIcon" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../icons/small-right-arrow-icon-64993.png" />
+                        <Image url="@../icons/arrow-right-drop-circle.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -60,14 +60,14 @@
                   <Font name="Serif Regular" size="24.0" />
                </font>
             </JFXButton>
-            <JFXButton fx:id="createAccBtn" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" layoutX="225.0" mnemonicParsing="false" onAction="#createAccBtnAction" prefHeight="71.0" prefWidth="83.0" ripplerFill="BLACK" text="Button">
+            <JFXButton fx:id="createAccBtn" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" layoutX="226.0" layoutY="11.0" mnemonicParsing="false" onAction="#createAccBtnAction" prefHeight="49.0" prefWidth="57.0" ripplerFill="BLACK" styleClass="round_btn" text="Button">
                <tooltip>
                   <Tooltip text="Create an Account" />
                </tooltip>
                <graphic>
-                  <ImageView fitHeight="55.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../icons/create-account-rooweb-clipart-380x380.png" />
+                        <Image url="@../icons/account-plus.png" />
                      </image>
                   </ImageView>
                </graphic>

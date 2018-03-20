@@ -7,7 +7,7 @@
 
 <HBox fx:id="settingsBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="500.0" styleClass="h_box" stylesheets="@../css/settings_window.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SettingsController">
    <children>
-      <JFXButton fx:id="addUserBtn" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" text="Button">
+      <JFXButton fx:id="addUserBtn" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" mnemonicParsing="false" onAction="#addUserBtnAction" prefHeight="100.0" prefWidth="100.0" text="Button">
          <graphic>
             <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -16,7 +16,7 @@
             </ImageView>
          </graphic>
       </JFXButton>
-      <JFXButton fx:id="userSettingsBtn" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" text="Button">
+      <JFXButton fx:id="userSettingsBtn" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#userSettingsBtnAction" prefHeight="100.0" prefWidth="100.0" text="Button">
          <graphic>
             <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -25,7 +25,7 @@
             </ImageView>
          </graphic>
       </JFXButton>
-      <JFXButton fx:id="deleteUserBtn" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" layoutX="110.0" layoutY="10.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" text="Button">
+      <JFXButton fx:id="deleteUserBtn" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" layoutX="110.0" layoutY="10.0" mnemonicParsing="false" onAction="#deleteUserBtnAction" prefHeight="100.0" prefWidth="100.0" text="Button">
          <graphic>
             <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -34,7 +34,7 @@
             </ImageView>
          </graphic>
       </JFXButton>
-      <JFXButton fx:id="infoBtn" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" layoutX="210.0" layoutY="10.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" text="Button">
+      <JFXButton fx:id="infoBtn" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" layoutX="210.0" layoutY="10.0" mnemonicParsing="false" onAction="#infoBtnAction" prefHeight="100.0" prefWidth="100.0" text="Button">
          <graphic>
             <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -43,7 +43,7 @@
             </ImageView>
          </graphic>
       </JFXButton>
-      <JFXButton fx:id="backBtn" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" layoutX="310.0" layoutY="10.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" text="Button">
+      <JFXButton fx:id="backBtn" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" layoutX="310.0" layoutY="10.0" mnemonicParsing="false" onAction="#backBtnAction" prefHeight="100.0" prefWidth="100.0" text="Button">
          <graphic>
             <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
                <image>

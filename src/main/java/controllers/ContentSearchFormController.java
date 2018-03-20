@@ -7,9 +7,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -34,6 +36,9 @@ public class ContentSearchFormController implements Initializable {
     private JFXButton advanceBtn;
 
     @FXML
+    private ImageView heartIcon;
+
+    @FXML
     JFXNodesList nodesList;
 
     @FXML
@@ -42,12 +47,18 @@ public class ContentSearchFormController implements Initializable {
     @FXML
     private JFXToggleButton advanceSearchBtn;
 
+    @FXML
+    private JFXButton backBtn;
+
     private HamburgerNextArrowBasicTransition transition;
     private RotateTransition rt;
+    private MethodLoader methodLoader;
+    private int addFav;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        methodLoader = new MethodLoader();
+        addFav = 1;
         try {
             sidebarBox = FXMLLoader.load(getClass().getResource("/presentation/sidebarContent.fxml"));
         } catch (IOException e) {
@@ -79,6 +90,8 @@ public class ContentSearchFormController implements Initializable {
         nodesList.setLayoutY(23);
         nodesList.setLayoutX(533);
         nodesList.setSpacing(5);
+
+        methodLoader.loadSideBar(sidebarBox);
         
     }
 
@@ -101,5 +114,13 @@ public class ContentSearchFormController implements Initializable {
         rt.setCycleCount(1);
         rt.setAutoReverse(false);
         rt.play();
+    }
+
+    public void backBtnAction(ActionEvent actionEvent) throws IOException {
+        methodLoader.startFormLoad((Stage) backBtn.getScene().getWindow());
+    }
+
+    public void addFavBtnAction(ActionEvent actionEvent) {
+        addFav = methodLoader.heartAnimation(addFav, heartIcon);
     }
 }

@@ -49,16 +49,20 @@ public class StartFormController implements Initializable {
     @FXML
     private JFXButton infoBtn;
 
+    private MethodLoader methodLoader;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Image imageNameBtn = new Image(getClass().getResourceAsStream("/icons/card_employee_badge_identification-512.png"),75,75,false,false);
-        nameSearchBtn = new JFXButton("    Search By Name", new ImageView(imageNameBtn));
+        methodLoader = new MethodLoader();
+
+        Image imageNameBtn = new Image(getClass().getResourceAsStream("/icons/icons8-name-tag-filled-50.png"),50,50,false,false);
+        nameSearchBtn = new JFXButton("   Search By Name", new ImageView(imageNameBtn));
         nameSearchBtn.setButtonType(JFXButton.ButtonType.RAISED);
         nameSearchBtn.setFocusTraversable(false);
         nameSearchBtn.getStylesheets().add("css/search_btn.css");
         nameSearchBtn.getStyleClass().add("animated-option-button");
 
-        Image imageContentBtn = new Image(getClass().getResourceAsStream("/icons/grey_new_seo-37-512.png"),75,75,false,false);
+        Image imageContentBtn = new Image(getClass().getResourceAsStream("/icons/icons8-content-50.png"),50,50,false,false);
         contentSearchBtn = new JFXButton("  Search By Content", new ImageView(imageContentBtn));
         contentSearchBtn.setButtonType(JFXButton.ButtonType.RAISED);
         contentSearchBtn.setFocusTraversable(false);
@@ -74,39 +78,9 @@ public class StartFormController implements Initializable {
         nodesList.setLayoutY(250);
         nodesList.setSpacing(5);
 
-        nameSearchBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, (e)-> {
+        nameSearchBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, (e)-> methodLoader.nameSearchFormLoad(nameSearchBtn));
 
-            Parent root = null;
-            try {
-                root = FXMLLoader.load(getClass().getResource("/presentation/name_search_form.fxml"));
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
-            Stage primaryStage = (Stage) nameSearchBtn.getScene().getWindow();
-            primaryStage.setTitle("Search By Name");
-            Image icon = new Image(getClass().getResourceAsStream("/icons/open-book-icon-32.png"));
-            primaryStage.getIcons().add(icon);
-            primaryStage.resizableProperty().setValue(Boolean.FALSE);
-            primaryStage.setScene(new Scene(root, 800, 600));
-            primaryStage.show();
-        });
-
-        contentSearchBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, (e)-> {
-
-            Parent root = null;
-            try {
-                root = FXMLLoader.load(getClass().getResource("/presentation/content_search_form.fxml"));
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
-            Stage primaryStage = (Stage) contentSearchBtn.getScene().getWindow();
-            primaryStage.setTitle("Search By Content");
-            Image icon = new Image(getClass().getResourceAsStream("/icons/open-book-icon-32.png"));
-            primaryStage.getIcons().add(icon);
-            primaryStage.resizableProperty().setValue(Boolean.FALSE);
-            primaryStage.setScene(new Scene(root, 800, 600));
-            primaryStage.show();
-        });
+        contentSearchBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, (e)-> methodLoader.contentSearchFormLoad(contentSearchBtn));
 
     }
 
@@ -120,35 +94,15 @@ public class StartFormController implements Initializable {
     }
 
     public void loginBtnAction(ActionEvent actionEvent) {
-        Parent root = null;
-        try {
-            root = FXMLLoader.load(getClass().getResource("/presentation/login_form.fxml"));
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
-        Stage primaryStage = (Stage) loginBtn.getScene().getWindow();
-        primaryStage.setTitle("Login");
-        Image userIcon = new Image(getClass().getResourceAsStream("/icons/img_311846.png"));
-        primaryStage.getIcons().add(userIcon);
-        primaryStage.resizableProperty().setValue(Boolean.FALSE);
-        primaryStage.setScene(new Scene(root, 500, 300));
-        primaryStage.show();
+
+        methodLoader.loginFormLoad(loginBtn);
+
     }
 
     public void createAccBtnAction(ActionEvent actionEvent) {
-        Parent root = null;
-        try {
-            root = FXMLLoader.load(getClass().getResource("/presentation/add_user_form.fxml"));
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
-        Stage primaryStage = (Stage) createAccBtn.getScene().getWindow();
-        primaryStage.setTitle("Create Account");
-        Image userIcon = new Image(getClass().getResourceAsStream("/icons/create-account-rooweb-clipart-380x380.png"));
-        primaryStage.getIcons().add(userIcon);
-        primaryStage.resizableProperty().setValue(Boolean.FALSE);
-        primaryStage.setScene(new Scene(root, 600, 400));
-        primaryStage.show();
+
+        methodLoader.createAccountFormLoad(createAccBtn);
+
     }
 
     public void infoBtnAction(ActionEvent actionEvent) {

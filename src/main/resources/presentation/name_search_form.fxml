@@ -59,11 +59,11 @@
                </graphic>
             </JFXButton>
          </children></AnchorPane>
-      <JFXButton contentDisplay="GRAPHIC_ONLY" layoutX="732.0" layoutY="438.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="46.0" styleClass="round_btn" stylesheets="@../css/round_btn.css" text="Search">
+      <JFXButton fx:id="addFavBtn" contentDisplay="GRAPHIC_ONLY" layoutX="732.0" layoutY="438.0" mnemonicParsing="false" onAction="#addFavBtnAction" prefHeight="45.0" prefWidth="46.0" styleClass="round_btn" stylesheets="@../css/round_btn.css" text="Search">
          <graphic>
             <ImageView fx:id="heartIcon" fitHeight="29.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../icons/ic_favorite_border_black_24dp_2x.png" />
+                  <Image url="@../icons/001-like.png" />
                </image>
             </ImageView>
          </graphic>
