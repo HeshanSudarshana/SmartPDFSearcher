@@ -1,32 +1,67 @@
-stmt = c.createStatement();
-String sql1 = "CREATE TABLE USER " +
-        "(USERNAME      VARCHAR(50)     PRIMARY KEY     NOT NULL," +
-        " PASSWORD      VARCHAR(50)                     NOT NULL, " +
-        " WORKSPACE     VARCHAR                         NOT NULL)";
-stmt.executeUpdate(sql1);
-stmt.close();
 
-System.out.println("table1 success");
+        Connection c = null;
+        Statement stmt = null;
 
-stmt = c.createStatement();
-String sql2 = "CREATE TABLE HISTORY " +
-        "(USERNAME      VARCHAR(50)     NOT NULL        REFERENCES  USER ON UPDATE CASCADE ON DELETE CASCADE," +
-        " KEYWORD       VARCHAR(100)    NOT NULL, " +
-        " SEARCH_TYPE   VARCHAR(10)     NOT NULL, " +
-        " TIME          VARCHAR(30)     NOT NULL, " +
-        " PRIMARY KEY (USERNAME, KEYWORD, SEARCH_TYPE, TIME),"+
-        " CHECK (SEARCH_TYPE IN ('Name','Content')))";
-stmt.executeUpdate(sql2);
-stmt.close();
+        try {
 
-System.out.println("table2 success");
+            Class.forName("org.sqlite.JDBC");
+            c = DriverManager.getConnection("jdbc:sqlite:src/main/resources/db/embedDB.db");
+            System.out.println("Opened database successfully");
 
-stmt = c.createStatement();
-String sql3 = "CREATE TABLE FAVOURITES " +
-        "(USERNAME      VARCHAR(50)     NOT NULL        REFERENCES  USER ON UPDATE CASCADE ON DELETE CASCADE," +
-        " PATH          VARCHAR         NOT NULL, " +
-        " PRIMARY KEY (USERNAME, PATH))";
-stmt.executeUpdate(sql3);
-stmt.close();
+            Statement statement = c.createStatement();
+            statement.executeUpdate("PRAGMA foreign_keys = ON ;");
 
-System.out.println("table3 success");
+            stmt = c.createStatement();
+            String sql1 = "DROP TABLE USER ;" ;
+            stmt.executeUpdate(sql1);
+            stmt.close();
+
+
+            stmt = c.createStatement();
+            String sql2 = "CREATE TABLE USER " +
+                    "(USERID        INTEGER         PRIMARY KEY     AUTOINCREMENT, " +
+                    " USERNAME      VARCHAR(50)     UNIQUE          NOT NULL," +
+                    " PASSWORD      VARCHAR(50)                     NOT NULL, " +
+                    " WORKSPACE     VARCHAR                         NOT NULL)";
+            stmt.executeUpdate(sql2);
+            stmt.close();
+
+            stmt = c.createStatement();
+            String sql3 = "DROP TABLE HISTORY ;" ;
+            stmt.executeUpdate(sql3);
+            stmt.close();
+
+
+            stmt = c.createStatement();
+            String sql4 = "CREATE TABLE HISTORY " +
+                    "(USERNAME      VARCHAR(50)     NOT NULL        REFERENCES  USER(USERNAME) ON UPDATE CASCADE ON DELETE CASCADE," +
+                    " KEYWORD       VARCHAR(100)    NOT NULL, " +
+                    " SEARCH_TYPE   VARCHAR(10)     NOT NULL, " +
+                    " TIME          VARCHAR(30)     NOT NULL, " +
+                    " PRIMARY KEY (USERNAME, KEYWORD, SEARCH_TYPE, TIME),"+
+                    " CHECK (SEARCH_TYPE IN ('Name','Content')))";
+            stmt.executeUpdate(sql4);
+            stmt.close();
+
+            stmt = c.createStatement();
+            String sql5 = "DROP TABLE FAVOURITES ;" ;
+            stmt.executeUpdate(sql5);
+            stmt.close();
+
+            stmt = c.createStatement();
+            String sql6 = "CREATE TABLE FAVOURITES " +
+                    "(USERNAME      VARCHAR(50)     NOT NULL        REFERENCES  USER(USERNAME) ON UPDATE CASCADE ON DELETE CASCADE," +
+                    " PATH          VARCHAR         NOT NULL, " +
+                    " PRIMARY KEY (USERNAME, PATH))";
+            stmt.executeUpdate(sql6);
+            stmt.close();
+
+
+            c.close();
+
+        } catch ( Exception e ) {
+
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            e.printStackTrace();
+
+}

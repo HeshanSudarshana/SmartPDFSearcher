@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
@@ -26,13 +27,11 @@
                     </font>
                 </Label>
             </children></AnchorPane>
-        <JFXTextField fx:id="usernameTxt" alignment="CENTER" focusColor="#22a7f0" labelFloat="true" layoutX="145.0" layoutY="109.0" prefHeight="30.0" prefWidth="310.0" promptText="Username (eg: user123)" unFocusColor="BLACK" />
-        <JFXTextField fx:id="passwordTxt" alignment="CENTER" focusColor="#22a7f0" labelFloat="true" layoutX="145.0" layoutY="155.0" prefHeight="30.0" prefWidth="310.0" promptText="Password" />
-        <JFXButton fx:id="signupBtn" layoutX="186.0" layoutY="325.0" mnemonicParsing="false" onAction="#signupBtnAction" prefHeight="40.0" prefWidth="95.0" style="-fx-border-color: #22a7f0;" text="Signup" wrapText="true" />
-        <JFXButton fx:id="cancelBtn" layoutX="317.0" layoutY="325.0" mnemonicParsing="false" onAction="#cancelBtn" prefHeight="40.0" prefWidth="95.0" style="-fx-border-color: #22a7f0;" text="Cancel" />
-      <JFXTextField fx:id="confirmPasswordTxt" alignment="CENTER" focusColor="#22a7f0" labelFloat="true" layoutX="145.0" layoutY="201.0" prefHeight="30.0" prefWidth="310.0" promptText="Confirm Password" />
-      <JFXTextField fx:id="workspaceTxt" alignment="CENTER" editable="false" focusColor="#22a7f0" labelFloat="true" layoutX="145.0" layoutY="253.0" prefHeight="30.0" prefWidth="310.0" promptText="Select a Workspace" />
-      <JFXButton layoutX="468.0" layoutY="248.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="42.0" text="..." wrapText="true">
+        <JFXTextField fx:id="usernameTxt" alignment="CENTER" focusColor="#22a7f0" focusTraversable="false" labelFloat="true" layoutX="145.0" layoutY="109.0" prefHeight="30.0" prefWidth="310.0" promptText="Username (eg: user123)" unFocusColor="BLACK" />
+        <JFXButton fx:id="signupBtn" focusTraversable="false" layoutX="186.0" layoutY="325.0" mnemonicParsing="false" onAction="#signupBtnAction" prefHeight="40.0" prefWidth="95.0" style="-fx-border-color: #22a7f0;" text="Signup" wrapText="true" />
+        <JFXButton fx:id="cancelBtn" focusTraversable="false" layoutX="317.0" layoutY="325.0" mnemonicParsing="false" onAction="#cancelBtn" prefHeight="40.0" prefWidth="95.0" style="-fx-border-color: #22a7f0;" text="Cancel" />
+      <JFXTextField fx:id="workspaceTxt" alignment="CENTER" editable="false" focusColor="#22a7f0" focusTraversable="false" labelFloat="true" layoutX="145.0" layoutY="253.0" prefHeight="30.0" prefWidth="310.0" promptText="Select a Workspace" />
+      <JFXButton fx:id="browseBtn" focusTraversable="false" layoutX="468.0" layoutY="248.0" mnemonicParsing="false" onAction="#browseBtnAction" prefHeight="40.0" prefWidth="42.0" text="..." wrapText="true">
          <font>
             <Font size="15.0" />
          </font>
@@ -41,6 +40,8 @@
       <ImageView fx:id="passwordErr" fitHeight="30.0" fitWidth="30.0" layoutX="105.0" layoutY="155.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="confirmPasswordErr" fitHeight="30.0" fitWidth="30.0" layoutX="105.0" layoutY="201.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="workspaceErr" fitHeight="30.0" fitWidth="30.0" layoutX="105.0" layoutY="253.0" pickOnBounds="true" preserveRatio="true" />
+      <JFXPasswordField fx:id="passwordTxt" alignment="CENTER" focusColor="#22a7f0" focusTraversable="false" labelFloat="true" layoutX="145.0" layoutY="157.0" prefHeight="26.0" prefWidth="310.0" promptText="Password" />
+      <JFXPasswordField fx:id="confirmPasswordTxt" alignment="CENTER" focusColor="#22a7f0" focusTraversable="false" labelFloat="true" layoutX="145.0" layoutY="205.0" prefHeight="26.0" prefWidth="310.0" promptText="Confirm Password" />
     </children>
 
 </AnchorPane>
