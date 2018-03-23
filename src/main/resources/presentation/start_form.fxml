@@ -75,6 +75,11 @@
                   <Tooltip text="Create an account" />
                </tooltip>
             </JFXButton>
+            <Label fx:id="hiLabel" layoutX="53.0" layoutY="150.0">
+               <font>
+                  <Font name="Serif Italic" size="24.0" />
+               </font>
+            </Label>
          </children></AnchorPane>
    </children>
 </AnchorPane>

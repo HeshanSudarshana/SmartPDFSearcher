@@ -1,5 +1,7 @@
 package controllers;
 
+import business_logic.DataFlowManager;
+import business_logic.PasswordHasher;
 import business_logic.UserConfig;
 import business_logic.Validator;
 import com.jfoenix.controls.JFXButton;
@@ -61,13 +63,15 @@ public class AddUserFormController implements Initializable{
     private boolean validated;
     private MethodLoader methodLoader;
     private UserConfig userConfig;
-
+    private DataFlowManager dataFlowManager;
+    private PasswordHasher passwordHasher;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         methodLoader = new MethodLoader();
         userConfig = new UserConfig();
         validator = new Validator();
+        passwordHasher = new PasswordHasher();
 
         validator.usernameValidator(usernameTxt, usernameErr);
         validator.passwordValidator(passwordTxt, passwordErr);
@@ -78,10 +82,14 @@ public class AddUserFormController implements Initializable{
 
     public void signupBtnAction(ActionEvent actionEvent) throws IOException {
 
-        validated = validator.validateForm(usernameErr, passwordErr, confirmPasswordErr, workspaceTxt);
+        validated = validator.validateAddUserForm(usernameErr, passwordErr, confirmPasswordErr, workspaceTxt);
         if (validated) {
 
-            userConfig.addUser(usernameTxt.getText(), passwordTxt.getText(), workspaceTxt.getText());
+            userConfig.addUser(usernameTxt.getText(), passwordHasher.generateHash(passwordTxt.getText()), workspaceTxt.getText());
+
+            User user = userConfig.getUserDetails(usernameTxt.getText());
+
+            dataFlowManager.login(usernameTxt.getText(), user.getUserID(), workspaceTxt.getText());
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("User Added Successfully!");

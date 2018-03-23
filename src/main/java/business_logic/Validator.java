@@ -8,10 +8,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
 import user_access.DBConnector;
+import user_access.User;
 
 public class Validator {
 
     private DBConnector dbConnector;
+    private PasswordHasher passwordHasher;
 
     public Validator() {
         dbConnector = new DBConnector();
@@ -73,65 +75,52 @@ public class Validator {
 
     }
 
-    public boolean validateForm(ImageView usernameImg, ImageView passwordImg, ImageView confirmPasswordImg, JFXTextField path) {
+    public boolean validateAddUserForm(ImageView usernameImg, ImageView passwordImg, ImageView confirmPasswordImg, JFXTextField path) {
         if(usernameImg.getImage()!=null){
 
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error!");
-            alert.setHeaderText("Username not valid!");
-            alert.setContentText("username should consist of only letters and numbers and should not be null.");
-            DialogPane dialogPane = alert.getDialogPane();
-            dialogPane.setMinHeight(Region.USE_PREF_SIZE);
-            dialogPane.setMinWidth(Region.USE_PREF_SIZE);
-            dialogPane.getStylesheets().add(getClass().getResource("/css/alert.css").toExternalForm());
-            dialogPane.getStyleClass().add("myDialog");
-            alert.showAndWait();
+            usernameAlert("Username should be unique, consist of only letters and numbers and should not be null.");
             return false;
 
         } else if (passwordImg.getImage() != null) {
 
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error!");
-            alert.setHeaderText("Password not valid!");
-            alert.setContentText("password should be at least 8 characters long with at least one uppercase letter, lowercase letter, symbol and a number included. user already ");
-            DialogPane dialogPane = alert.getDialogPane();
-            dialogPane.setMinHeight(Region.USE_PREF_SIZE);
-            dialogPane.setMinWidth(Region.USE_PREF_SIZE);
-            dialogPane.getStylesheets().add(getClass().getResource("/css/alert.css").toExternalForm());
-            dialogPane.getStyleClass().add("myDialog");
-            alert.showAndWait();
+            passwordAlert("Password should be at least 8 characters long with at least one uppercase letter, lowercase letter, symbol and a number included. user already ");
             return false;
 
         } else if (confirmPasswordImg.getImage() != null) {
 
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error!");
-            alert.setHeaderText("Password mismatch!");
-            alert.setContentText("Carefully enter the confirmation password again.");
-            DialogPane dialogPane = alert.getDialogPane();
-            dialogPane.setMinHeight(Region.USE_PREF_SIZE);
-            dialogPane.setMinWidth(Region.USE_PREF_SIZE);
-            dialogPane.getStylesheets().add(getClass().getResource("/css/alert.css").toExternalForm());
-            dialogPane.getStyleClass().add("myDialog");
-            alert.showAndWait();
+            confirmPasswordAlert("Carefully enter the confirmation password again.");
             return false;
 
         } else if(path.getText() == null || path.getText().equals("")) {
 
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error!");
-            alert.setHeaderText("Path not defined!");
-            alert.setContentText("Workspace Path should be defined.");
-            DialogPane dialogPane = alert.getDialogPane();
-            dialogPane.setMinHeight(Region.USE_PREF_SIZE);
-            dialogPane.setMinWidth(Region.USE_PREF_SIZE);
-            dialogPane.getStylesheets().add(getClass().getResource("/css/alert.css").toExternalForm());
-            dialogPane.getStyleClass().add("myDialog");
-            alert.showAndWait();
+            pathNotValidAlert("Workspace Path should be defined.");
             return false;
 
         } else {
             return true;
+        }
+    }
+
+    public boolean validateDeleteUserForm (JFXTextField username, JFXPasswordField password) {
+
+        if(!username.getText().matches("[a-zA-Z0-9]+") || !dbConnector.getUsernameList().contains(username.getText())) {
+
+            usernameAlert("Please check your username. (Hint - Username is case sensitive!)");
+            return false;
+
+        } else {
+            User user = dbConnector.getUserDetails(username.getText());
+            String hashedPwd = passwordHasher.generateHash(password.getText());
+            if(password.getText().equals("") || password.getText().equals(null)) {
+                passwordAlert("Please enter the password.");
+                return false;
+            } else if (!hashedPwd.equals(user.getPassword())) {
+                passwordAlert("Wrong Password.");
+                return false;
+            }
+            else {
+                return true;
+            }
         }
     }
 
@@ -142,5 +131,57 @@ public class Validator {
 
     public void setDbConnector(DBConnector dbConnector) {
         this.dbConnector = dbConnector;
+    }
+
+    public void usernameAlert(String errMsg) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error!");
+        alert.setHeaderText("Username not valid!");
+        alert.setContentText(errMsg);
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.setMinHeight(Region.USE_PREF_SIZE);
+        dialogPane.setMinWidth(Region.USE_PREF_SIZE);
+        dialogPane.getStylesheets().add(getClass().getResource("/css/alert.css").toExternalForm());
+        dialogPane.getStyleClass().add("myDialog");
+        alert.showAndWait();
+    }
+
+    public void passwordAlert(String errMsg) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error!");
+        alert.setHeaderText("Password not valid!");
+        alert.setContentText(errMsg);
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.setMinHeight(Region.USE_PREF_SIZE);
+        dialogPane.setMinWidth(Region.USE_PREF_SIZE);
+        dialogPane.getStylesheets().add(getClass().getResource("/css/alert.css").toExternalForm());
+        dialogPane.getStyleClass().add("myDialog");
+        alert.showAndWait();
+    }
+
+    public void confirmPasswordAlert(String errMsg) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error!");
+        alert.setHeaderText("Password mismatch!");
+        alert.setContentText(errMsg);
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.setMinHeight(Region.USE_PREF_SIZE);
+        dialogPane.setMinWidth(Region.USE_PREF_SIZE);
+        dialogPane.getStylesheets().add(getClass().getResource("/css/alert.css").toExternalForm());
+        dialogPane.getStyleClass().add("myDialog");
+        alert.showAndWait();
+    }
+
+    public void pathNotValidAlert(String errMsg) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error!");
+        alert.setHeaderText("Path not defined!");
+        alert.setContentText(errMsg);
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.setMinHeight(Region.USE_PREF_SIZE);
+        dialogPane.setMinWidth(Region.USE_PREF_SIZE);
+        dialogPane.getStylesheets().add(getClass().getResource("/css/alert.css").toExternalForm());
+        dialogPane.getStyleClass().add("myDialog");
+        alert.showAndWait();
     }
 }

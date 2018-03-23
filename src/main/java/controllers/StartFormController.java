@@ -1,5 +1,6 @@
 package controllers;
 
+import business_logic.DataFlowManager;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXNodesList;
 import javafx.animation.RotateTransition;
@@ -9,10 +10,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -49,11 +53,16 @@ public class StartFormController implements Initializable {
     @FXML
     private JFXButton infoBtn;
 
+    @FXML
+    private Label hiLabel;
+
     private MethodLoader methodLoader;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         methodLoader = new MethodLoader();
+
+        hiLabel.setText("Hi, " + DataFlowManager.username + "\nWelcome!");
 
         Image imageNameBtn = new Image(getClass().getResourceAsStream("/icons/icons8-name-tag-filled-50.png"),50,50,false,false);
         nameSearchBtn = new JFXButton("   Search By Name", new ImageView(imageNameBtn));
