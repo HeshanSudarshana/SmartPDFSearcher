@@ -62,8 +62,6 @@ public class StartFormController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         methodLoader = new MethodLoader();
 
-        hiLabel.setText("Hi, " + DataFlowManager.username + "\nWelcome!");
-
         Image imageNameBtn = new Image(getClass().getResourceAsStream("/icons/icons8-name-tag-filled-50.png"),50,50,false,false);
         nameSearchBtn = new JFXButton("   Search By Name", new ImageView(imageNameBtn));
         nameSearchBtn.setButtonType(JFXButton.ButtonType.RAISED);

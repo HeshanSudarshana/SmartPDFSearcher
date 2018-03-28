@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
@@ -8,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="300.0" maxWidth="500.0" minHeight="300.0" minWidth="500.0" prefHeight="300.0" prefWidth="500.0" style="-fx-background-color: #dacddc;" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginFormController">
+<AnchorPane maxHeight="300.0" maxWidth="500.0" minHeight="300.0" minWidth="500.0" prefHeight="300.0" prefWidth="500.0" style="-fx-background-color: #dacddc;" xmlns="http://javafx.com/javafx/8.0.161" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginFormController">
    <children>
       <AnchorPane layoutX="23.0" prefHeight="82.0" prefWidth="82.0" style="-fx-background-color: #22a7f0;">
          <children>
@@ -26,9 +27,9 @@
                </font>
             </Label>
          </children></AnchorPane>
-      <JFXTextField alignment="CENTER" focusColor="#22a7f0" labelFloat="true" layoutX="105.0" layoutY="109.0" prefHeight="30.0" prefWidth="310.0" promptText="Username" unFocusColor="BLACK" />
-      <JFXTextField alignment="CENTER" focusColor="#22a7f0" labelFloat="true" layoutX="105.0" layoutY="169.0" prefHeight="30.0" prefWidth="310.0" promptText="Password" />
-      <JFXButton layoutX="155.0" layoutY="230.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="95.0" style="-fx-border-color: #22a7f0;" text="Login" />
-      <JFXButton layoutX="272.0" layoutY="230.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="95.0" style="-fx-border-color: #22a7f0;" text="Cancel" />
+      <JFXTextField fx:id="usernameTxt" alignment="CENTER" focusColor="#22a7f0" labelFloat="true" layoutX="105.0" layoutY="109.0" prefHeight="30.0" prefWidth="310.0" promptText="Username" unFocusColor="BLACK" />
+      <JFXButton fx:id="loginBtn" layoutX="155.0" layoutY="230.0" mnemonicParsing="false" onAction="#loginBtnAction" prefHeight="40.0" prefWidth="95.0" style="-fx-border-color: #22a7f0;" text="Login" />
+      <JFXButton fx:id="cancelBtn" layoutX="272.0" layoutY="230.0" mnemonicParsing="false" onAction="#cancelBtnAction" prefHeight="40.0" prefWidth="95.0" style="-fx-border-color: #22a7f0;" text="Cancel" />
+      <JFXPasswordField fx:id="passwordTxt" alignment="CENTER" focusColor="#22a7f0" labelFloat="true" layoutX="105.0" layoutY="162.0" prefHeight="30.0" prefWidth="310.0" promptText="Password" />
    </children>
 </AnchorPane>

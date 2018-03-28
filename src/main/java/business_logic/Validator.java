@@ -101,7 +101,7 @@ public class Validator {
         }
     }
 
-    public boolean validateDeleteUserForm (JFXTextField username, JFXPasswordField password) {
+    public boolean validateUserForm(JFXTextField username, JFXPasswordField password) {
 
         if(!username.getText().matches("[a-zA-Z0-9]+") || !dbConnector.getUsernameList().contains(username.getText())) {
 

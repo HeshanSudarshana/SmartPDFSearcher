@@ -70,7 +70,7 @@ public class ContentSearchFormController implements Initializable {
         transition.setRate(-1);
 
         saveDirBtn = new JFXToggleButton();
-        saveDirBtn.setText("Save to Directory");
+        saveDirBtn.setText("Advanced Search");
         saveDirBtn.setFocusTraversable(false);
         saveDirBtn.getStylesheets().add("css/round_btn.css");
         saveDirBtn.getStyleClass().add("toggle-button");

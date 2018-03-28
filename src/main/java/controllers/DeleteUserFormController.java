@@ -1,5 +1,6 @@
 package controllers;
 
+import business_logic.DataFlowManager;
 import business_logic.UserConfig;
 import business_logic.Validator;
 import com.jfoenix.controls.JFXButton;
@@ -32,18 +33,23 @@ public class DeleteUserFormController implements Initializable {
     private Validator validator;
     private boolean validated;
     private MethodLoader methodLoader;
+    private DataFlowManager dataFlowManager;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        dataFlowManager.getInstance();
         userConfig = new UserConfig();
         validator = new Validator();
         methodLoader = new MethodLoader();
     }
 
     public void deleteBtnAction(ActionEvent actionEvent) throws IOException {
-        validated = validator.validateDeleteUserForm(usernameTxt, passwordTxt);
+        validated = validator.validateUserForm(usernameTxt, passwordTxt);
         if (validated) {
             userConfig.deleteUser(usernameTxt.getText());
+            if (dataFlowManager.getUsername().equals(usernameTxt.getText())) {
+                dataFlowManager.logout();
+            }
             methodLoader.startFormLoad((Stage) deleteBtn.getScene().getWindow());
         }
     }
