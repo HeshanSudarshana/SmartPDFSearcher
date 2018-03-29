@@ -24,7 +24,7 @@ public class DataFlowManager {
 
     public void logout() {
         setUsername(null);
-        setUserID(Integer.parseInt(null));
+        setUserID(0);
         setWorkspace(null);
     }
 

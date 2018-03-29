@@ -2,6 +2,7 @@ package controllers;
 
 
 import business_logic.DataFlowManager;
+import business_logic.UserConfig;
 import business_logic.Validator;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
@@ -12,7 +13,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
 import javafx.scene.layout.Region;
+import javafx.stage.Stage;
+import user_access.User;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -29,25 +33,40 @@ public class LoginFormController implements Initializable {
     private Validator validator;
     private boolean validated;
     private MethodLoader methodLoader;
+    private UserConfig userConfig;
+    private User user;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         dataFlowManager = DataFlowManager.getInstance();
         validator = new Validator();
         methodLoader = new MethodLoader();
+        userConfig = new UserConfig();
     }
 
-    public void loginBtnAction(ActionEvent actionEvent) {
+    public void loginBtnAction(ActionEvent actionEvent) throws IOException {
         validated = validator.validateUserForm(usernameTxt, passwordTxt);
         if (validated) {
-            if (dataFlowManager.getUsername() != null) {
-                //logout alert should be done
+            user = userConfig.getUserDetails(usernameTxt.getText());
+            if(dataFlowManager.getUsername() != null) {
+                if (dataFlowManager.getUsername().equals(usernameTxt.getText())) {
+
+                    methodLoader.alreadyLoggedinAlert(usernameTxt.getText());
+
+                } else {
+
+                    methodLoader.logoutAndLoginAlert(usernameTxt.getText(), user.getUserID(), user.getWorkspacePath(), "Do you want to logout from current session and login as " + usernameTxt.getText());
+
+                }
+            } else {
+                dataFlowManager.login(usernameTxt.getText(), user.getUserID(), user.getWorkspacePath());
             }
+            methodLoader.startFormLoad((Stage) usernameTxt.getScene().getWindow());
         }
     }
 
-    public void cancelBtnAction(ActionEvent actionEvent) {
-
+    public void cancelBtnAction(ActionEvent actionEvent) throws IOException {
+        methodLoader.startFormLoad((Stage) usernameTxt.getScene().getWindow());
     }
 
 }

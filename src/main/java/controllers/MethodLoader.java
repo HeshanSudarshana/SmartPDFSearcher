@@ -1,23 +1,27 @@
 package controllers;
 
+import business_logic.DataFlowManager;
 import com.jfoenix.controls.JFXButton;
-import javafx.animation.RotateTransition;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.DialogPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import javafx.util.Duration;
 
 import java.io.IOException;
+import java.util.Optional;
 
 public class MethodLoader {
+
+    private DataFlowManager dataFlowManager = DataFlowManager.getInstance();
 
     public void createAccountFormLoad(JFXButton btn) {
         Parent root = null;
@@ -28,7 +32,7 @@ public class MethodLoader {
         }
         Stage primaryStage = (Stage) btn.getScene().getWindow();
         primaryStage.setTitle("Create Account");
-        Image userIcon = new Image(getClass().getResourceAsStream("/icons/account-plus.png"));
+        Image userIcon = new Image(getClass().getResourceAsStream("/icons/open-book-icon-32.png"));
         primaryStage.getIcons().add(userIcon);
         primaryStage.resizableProperty().setValue(Boolean.FALSE);
         primaryStage.setScene(new Scene(root, 600, 400));
@@ -44,7 +48,7 @@ public class MethodLoader {
         }
         Stage primaryStage = (Stage) btn.getScene().getWindow();
         primaryStage.setTitle("Login");
-        Image userIcon = new Image(getClass().getResourceAsStream("/icons/account.png"));
+        Image userIcon = new Image(getClass().getResourceAsStream("/icons/open-book-icon-32.png"));
         primaryStage.getIcons().add(userIcon);
         primaryStage.resizableProperty().setValue(Boolean.FALSE);
         primaryStage.setScene(new Scene(root, 500, 300));
@@ -92,7 +96,7 @@ public class MethodLoader {
         }
         Stage primaryStage = (Stage) btn.getScene().getWindow();
         primaryStage.setTitle("Create Account");
-        Image userIcon = new Image(getClass().getResourceAsStream("/icons/account-settings-variant.png"));
+        Image userIcon = new Image(getClass().getResourceAsStream("/icons/open-book-icon-32.png"));
         primaryStage.getIcons().add(userIcon);
         primaryStage.resizableProperty().setValue(Boolean.FALSE);
         primaryStage.setScene(new Scene(root, 600, 400));
@@ -108,7 +112,7 @@ public class MethodLoader {
         }
         Stage primaryStage = (Stage) btn.getScene().getWindow();
         primaryStage.setTitle("Login");
-        Image userIcon = new Image(getClass().getResourceAsStream("/icons/account-remove.png"));
+        Image userIcon = new Image(getClass().getResourceAsStream("/icons/open-book-icon-32.png"));
         primaryStage.getIcons().add(userIcon);
         primaryStage.resizableProperty().setValue(Boolean.FALSE);
         primaryStage.setScene(new Scene(root, 500, 300));
@@ -135,7 +139,7 @@ public class MethodLoader {
         }
         Stage primaryStage1 = (Stage) btn.getScene().getWindow();
         primaryStage1.setTitle("History");
-        Image userIcon1 = new Image(getClass().getResourceAsStream("/icons/ic_history_black_24dp_2x.png"));
+        Image userIcon1 = new Image(getClass().getResourceAsStream("/icons/open-book-icon-32.png"));
         primaryStage1.getIcons().add(userIcon1);
         primaryStage1.resizableProperty().setValue(Boolean.FALSE);
         primaryStage1.setScene(new Scene(root1, 600, 465));
@@ -153,7 +157,7 @@ public class MethodLoader {
         }
         Stage primaryStage2 = (Stage) btn.getScene().getWindow();
         primaryStage2.setTitle("Favourites");
-        Image userIcon2 = new Image(getClass().getResourceAsStream("/icons/ic_favorite_black_24dp_2x.png"));
+        Image userIcon2 = new Image(getClass().getResourceAsStream("/icons/open-book-icon-32.png"));
         primaryStage2.getIcons().add(userIcon2);
         primaryStage2.resizableProperty().setValue(Boolean.FALSE);
         primaryStage2.setScene(new Scene(root2, 600, 465));
@@ -211,5 +215,38 @@ public class MethodLoader {
             addFav *= -1;
         }
         return addFav;
+    }
+
+    public void logoutAndLoginAlert(String username, int userID, String workspace, String contentText) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Logout Alert");
+        alert.setGraphic(new ImageView(getClass().getResource("/icons/ic_power_settings_new_black_24dp_2x.png").toString()));
+        alert.setHeaderText(dataFlowManager.getUsername()+" Logout?");
+        alert.setContentText(contentText);
+        DialogPane dialogPane1 = alert.getDialogPane();
+        dialogPane1.setMinHeight(Region.USE_PREF_SIZE);
+        dialogPane1.setMinWidth(Region.USE_PREF_SIZE);
+        dialogPane1.getStylesheets().add(getClass().getResource("/css/alert.css").toExternalForm());
+        dialogPane1.getStyleClass().add("myDialog");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK){
+            dataFlowManager.logout();
+            dataFlowManager.login(username, userID, workspace);
+        } else {
+            //do nothing
+        }
+    }
+
+    public void alreadyLoggedinAlert(String username) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Alert!");
+        alert.setHeaderText("Already Logged in!");
+        alert.setContentText("You are currently logged in as " + username);
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.setMinHeight(Region.USE_PREF_SIZE);
+        dialogPane.setMinWidth(Region.USE_PREF_SIZE);
+        dialogPane.getStylesheets().add(getClass().getResource("/css/alert.css").toExternalForm());
+        dialogPane.getStyleClass().add("myDialog");
+        alert.showAndWait();
     }
 }

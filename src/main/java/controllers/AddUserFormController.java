@@ -105,22 +105,7 @@ public class AddUserFormController implements Initializable{
             alert.showAndWait();
 
             if (dataFlowManager.getUsername() != null) {
-                Alert alert1 = new Alert(Alert.AlertType.CONFIRMATION);
-                alert1.setTitle("Logout Alert");
-                alert1.setHeaderText(dataFlowManager.getUsername()+" Logout?");
-                alert1.setContentText("Do you want to logout from current session and login as " + usernameTxt.getText());
-                DialogPane dialogPane1 = alert1.getDialogPane();
-                dialogPane1.setMinHeight(Region.USE_PREF_SIZE);
-                dialogPane1.setMinWidth(Region.USE_PREF_SIZE);
-                dialogPane1.getStylesheets().add(getClass().getResource("/css/alert.css").toExternalForm());
-                dialogPane1.getStyleClass().add("myDialog");
-                Optional<ButtonType> result = alert1.showAndWait();
-                if (result.get() == ButtonType.OK){
-                    dataFlowManager.logout();
-                    dataFlowManager.login(usernameTxt.getText(), user.getUserID(), workspaceTxt.getText());
-                } else {
-                    //do nothing
-                }
+                methodLoader.logoutAndLoginAlert(usernameTxt.getText(), user.getUserID(), user.getWorkspacePath(), "Do you want to logout from current session and login as " + usernameTxt.getText());
             } else {
                 dataFlowManager.login(usernameTxt.getText(), user.getUserID(), workspaceTxt.getText());
             }
