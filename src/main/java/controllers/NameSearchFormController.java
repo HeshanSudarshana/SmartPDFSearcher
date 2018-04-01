@@ -2,18 +2,18 @@ package controllers;
 
 import com.jfoenix.controls.*;
 import com.jfoenix.transitions.hamburger.HamburgerNextArrowBasicTransition;
+import business_logic.PDFFile;
 import javafx.animation.RotateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.image.Image;
+import javafx.scene.control.TreeItem;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
@@ -62,10 +62,26 @@ public class NameSearchFormController implements Initializable {
     @FXML
     private JFXButton backBtn;
 
+    @FXML
+    private JFXButton searchBtn;
+
+    @FXML
+    private JFXButton browseBtn;
+
+    @FXML
+    private JFXTextField searchDirectoryTxt;
+
+    @FXML
+    private JFXTextField searchTxt;
+
+    @FXML
+    private JFXTreeTableView<PDFFile> searchResultsTreeTableView;
+
     private HamburgerNextArrowBasicTransition transition;
     private RotateTransition rt;
     private MethodLoader methodLoader;
     private int addFav;
+    private TreeItem<PDFFile> pdfFileTreeItem;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -98,6 +114,20 @@ public class NameSearchFormController implements Initializable {
 
         methodLoader.loadSideBar(sidebarBox);
 
+        JFXTreeTableColumn <PDFFile, String> name = new JFXTreeTableColumn<PDFFile, String>("Name");
+        name.setPrefWidth(218);
+        name.setCellValueFactory(param -> param.getValue().getValue().getFileName());
+
+        JFXTreeTableColumn <PDFFile, String> path = new JFXTreeTableColumn<PDFFile, String>("Path");
+        path.setPrefWidth(218);
+        path.setCellValueFactory(param -> param.getValue().getValue().getFilePath());
+
+        JFXTreeTableColumn <PDFFile, String> date = new JFXTreeTableColumn<PDFFile, String>("Date Modified");
+        date.setPrefWidth(218);
+        date.setCellValueFactory(param -> param.getValue().getValue().getDateModified());
+
+        searchResultsTreeTableView.getColumns().setAll(name, path, date);
+
     }
 
     public void sidebarHamClicked(MouseEvent mouseEvent) {
@@ -113,11 +143,7 @@ public class NameSearchFormController implements Initializable {
     }
 
     public void advanceButtonAction(ActionEvent actionEvent) {
-        rt = new RotateTransition(Duration.millis(100), advanceBtn);
-        rt.setByAngle(180);
-        rt.setCycleCount(1);
-        rt.setAutoReverse(false);
-        rt.play();
+        methodLoader.rotateTransition(rt, advanceBtn);
     }
 
     public void backBtnAction(ActionEvent actionEvent) throws IOException {
@@ -126,5 +152,13 @@ public class NameSearchFormController implements Initializable {
 
     public void addFavBtnAction(ActionEvent actionEvent) {
         addFav = methodLoader.heartAnimation(addFav, heartIcon);
+    }
+
+    public void searchBtnAction(ActionEvent actionEvent) {
+
+    }
+
+    public void browseBtnAction(ActionEvent actionEvent) {
+        methodLoader.loadDirectorySelector(searchDirectoryTxt, "Select a Directory to Search");
     }
 }

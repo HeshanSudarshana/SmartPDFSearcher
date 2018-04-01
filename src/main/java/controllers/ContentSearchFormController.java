@@ -109,11 +109,7 @@ public class ContentSearchFormController implements Initializable {
     }
 
     public void advanceButtonAction(ActionEvent actionEvent) {
-        rt = new RotateTransition(Duration.millis(100), advanceBtn);
-        rt.setByAngle(180);
-        rt.setCycleCount(1);
-        rt.setAutoReverse(false);
-        rt.play();
+        methodLoader.rotateTransition(rt, advanceBtn);
     }
 
     public void backBtnAction(ActionEvent actionEvent) throws IOException {

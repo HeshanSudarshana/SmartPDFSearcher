@@ -1,5 +1,7 @@
 package business_logic;
 
+import controllers.MethodLoader;
+
 public class DataFlowManager {
 
     private static DataFlowManager dataFlowManager;

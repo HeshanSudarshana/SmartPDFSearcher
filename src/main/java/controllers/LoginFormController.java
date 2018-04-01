@@ -60,6 +60,7 @@ public class LoginFormController implements Initializable {
                 }
             } else {
                 dataFlowManager.login(usernameTxt.getText(), user.getUserID(), user.getWorkspacePath());
+                methodLoader.successfullyLoggedinAlert(usernameTxt.getText());
             }
             methodLoader.startFormLoad((Stage) usernameTxt.getScene().getWindow());
         }

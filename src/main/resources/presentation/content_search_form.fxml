@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="600.0" maxWidth="800.0" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #dacddc;" stylesheets="@../css/search_forms.css" xmlns="http://javafx.com/javafx/8.0.161" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ContentSearchFormController">
+<AnchorPane maxHeight="600.0" maxWidth="800.0" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #dacddc;" stylesheets="@../css/search_forms.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ContentSearchFormController">
 
     <children>
         <AnchorPane layoutX="23.0" prefHeight="97.0" prefWidth="97.0" style="-fx-background-color: #22a7f0;">
@@ -33,13 +33,13 @@
         <JFXHamburger fx:id="sidebarHam" alignment="CENTER" layoutX="713.0" layoutY="4.0" onMouseClicked="#sidebarHamClicked" prefHeight="89.0" prefWidth="85.0" styleClass="jfx-hamburger" />
         <AnchorPane layoutX="23.0" layoutY="109.0" prefHeight="97.0" prefWidth="685.0" styleClass="container_pane">
             <children>
-                <JFXTextField alignment="CENTER" editable="false" focusTraversable="false" labelFloat="true" layoutX="57.0" layoutY="26.0" prefHeight="45.0" prefWidth="476.0" promptText="Select a Directory to Search" />
+                <JFXTextField alignment="CENTER" editable="false" focusTraversable="false" labelFloat="true" layoutX="57.0" layoutY="30.0" prefHeight="40.0" prefWidth="476.0" promptText="Select a Directory to Search" />
                 <JFXButton focusTraversable="false" layoutX="543.0" layoutY="26.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="107.0" text="Browse.." />
             </children></AnchorPane>
         <AnchorPane fx:id="searchPane" layoutX="23.0" layoutY="223.0" prefHeight="355.0" prefWidth="685.0" styleClass="container_pane">
             <children>
                 <JFXTreeTableView layoutX="15.0" layoutY="86.0" prefHeight="255.0" prefWidth="656.0" />
-                <JFXTextField alignment="CENTER" focusTraversable="false" labelFloat="true" layoutX="15.0" layoutY="23.0" prefHeight="45.0" prefWidth="352.0" promptText="Enter Search Content" />
+                <JFXTextField alignment="CENTER" focusTraversable="false" labelFloat="true" layoutX="15.0" layoutY="26.0" prefHeight="40.0" prefWidth="352.0" promptText="Enter Search Content" />
                 <JFXButton contentDisplay="GRAPHIC_ONLY" focusTraversable="false" layoutX="393.0" layoutY="23.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="46.0" styleClass="round_btn" stylesheets="@../css/round_btn.css" text="Search">
                     <graphic>
                         <ImageView fitHeight="29.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">

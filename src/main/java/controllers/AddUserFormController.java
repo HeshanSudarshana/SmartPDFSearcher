@@ -108,6 +108,7 @@ public class AddUserFormController implements Initializable{
                 methodLoader.logoutAndLoginAlert(usernameTxt.getText(), user.getUserID(), user.getWorkspacePath(), "Do you want to logout from current session and login as " + usernameTxt.getText());
             } else {
                 dataFlowManager.login(usernameTxt.getText(), user.getUserID(), workspaceTxt.getText());
+                methodLoader.successfullyLoggedinAlert(usernameTxt.getText());
             }
 
             methodLoader.startFormLoad((Stage) signupBtn.getScene().getWindow());
@@ -122,15 +123,6 @@ public class AddUserFormController implements Initializable{
     }
 
     public void browseBtnAction(ActionEvent actionEvent) {
-        DirectoryChooser directoryChooser = new DirectoryChooser();
-        directoryChooser.setTitle("Select a Directory to Search");
-        File selectedDirectory = directoryChooser.showDialog(null);
-        if (selectedDirectory!=null) {
-            workspaceTxt.setText(selectedDirectory.getAbsolutePath());
-            workspaceTxt.setAlignment(Pos.CENTER_LEFT);
-        } else {
-            workspaceTxt.setText("");
-            workspaceTxt.setAlignment(Pos.CENTER);
-        }
+        methodLoader.loadDirectorySelector(workspaceTxt, "Select a Workspace to Save Searched Data");
     }
 }

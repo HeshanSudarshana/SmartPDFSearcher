@@ -2,7 +2,10 @@ package controllers;
 
 import business_logic.DataFlowManager;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTextField;
+import javafx.animation.RotateTransition;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -14,8 +17,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
 
@@ -232,6 +238,7 @@ public class MethodLoader {
         if (result.get() == ButtonType.OK){
             dataFlowManager.logout();
             dataFlowManager.login(username, userID, workspace);
+            successfullyLoggedinAlert(username);
         } else {
             //do nothing
         }
@@ -249,4 +256,39 @@ public class MethodLoader {
         dialogPane.getStyleClass().add("myDialog");
         alert.showAndWait();
     }
+
+    public void successfullyLoggedinAlert(String username) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Successful!");
+        alert.setHeaderText("Successfully Logged in as "+ username);
+        alert.setContentText("");
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.setMinHeight(Region.USE_PREF_SIZE);
+        dialogPane.setMinWidth(Region.USE_PREF_SIZE);
+        dialogPane.getStylesheets().add(getClass().getResource("/css/alert.css").toExternalForm());
+        dialogPane.getStyleClass().add("myDialog");
+        alert.showAndWait();
+    }
+
+    public void rotateTransition(RotateTransition rt, JFXButton advanceBtn) {
+        rt = new RotateTransition(Duration.millis(100), advanceBtn);
+        rt.setByAngle(180);
+        rt.setCycleCount(1);
+        rt.setAutoReverse(false);
+        rt.play();
+    }
+
+    public void loadDirectorySelector(JFXTextField textField, String headerTxt) {
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setTitle(headerTxt);
+        File selectedDirectory = directoryChooser.showDialog(null);
+        if (selectedDirectory!=null) {
+            textField.setText(selectedDirectory.getAbsolutePath());
+            textField.setAlignment(Pos.CENTER_LEFT);
+        } else {
+            textField.setText("");
+            textField.setAlignment(Pos.CENTER);
+        }
+    }
+
 }
