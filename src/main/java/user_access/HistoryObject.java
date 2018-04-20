@@ -5,12 +5,14 @@ public class HistoryObject {
     private String keyword;
     private String search_type;
     private String time;
+    private String search_path;
 
-    public HistoryObject(String username, String keyword, String search_type, String time) {
+    public HistoryObject(String username, String keyword, String search_type, String time, String search_path) {
         this.setUsername(username);
         this.setKeyword(keyword);
         this.setSearch_type(search_type);
         this.setTime(time);
+        this.setSearch_path(search_path);
     }
 
 
@@ -44,5 +46,13 @@ public class HistoryObject {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public String getSearch_path() {
+        return search_path;
+    }
+
+    public void setSearch_path(String search_path) {
+        this.search_path = search_path;
     }
 }

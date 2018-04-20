@@ -29,8 +29,8 @@ public class UserConfig {
         dbConnector.deleteUser(username);
     }
 
-    public void addHistoryObject(String username, String keyword, String search_type) {
-        dbConnector.addToHistory(username, keyword, search_type);
+    public void addHistoryObject(String username, String keyword, String search_type, String search_path) {
+        dbConnector.addToHistory(username, keyword, search_type, search_path);
     }
 
     public ArrayList<HistoryObject> getHistory(int userID) {
@@ -38,8 +38,8 @@ public class UserConfig {
         return list;
     }
 
-    public void deleteHistoryObject(String username, String keyword, String search_type, String time) {
-        dbConnector.deleteHistoryObject(username, keyword, search_type, time);
+    public void deleteHistoryObject(String username, String keyword, String search_type, String time, String search_path) {
+        dbConnector.deleteHistoryObject(username, keyword, search_type, time, search_path);
     }
 
     public void deleteAllHistory(String username) {

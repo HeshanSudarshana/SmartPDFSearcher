@@ -42,7 +42,7 @@ public class DBConnector {
 
     //add history to database (keeping records)
 
-    public void addToHistory(String username, String path, String searchType) {
+    public void addToHistory(String username, String path, String searchType, String searchPath) {
 
         Connection c = null;
         PreparedStatement stmt = null;
@@ -56,10 +56,11 @@ public class DBConnector {
             Statement statement = c.createStatement();
             statement.executeUpdate("PRAGMA foreign_keys = ON ;");
 
-            stmt = c.prepareStatement("INSERT INTO history (username, keyword, search_type, time) VALUES (?, ?, ?, ?);");
+            stmt = c.prepareStatement("INSERT INTO history (username, keyword, search_type, time, search_path) VALUES (?, ?, ?, ?, ?);");
             stmt.setString(1, username);
             stmt.setString(2, path);
             stmt.setString(3, searchType);
+            stmt.setString(4, searchPath);
 
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
             LocalDateTime now = LocalDateTime.now();
@@ -256,8 +257,9 @@ public class DBConnector {
                 String keyword = resultSet.getString("keyword");
                 String search_type = resultSet.getString("search_type");
                 String time = resultSet.getString("time");
+                String search_path = resultSet.getString("search_path");
 
-                HistoryObject temp = new HistoryObject(username, keyword, search_type, time);
+                HistoryObject temp = new HistoryObject(username, keyword, search_type, time, search_path);
                 list.add(temp);
             }
 
@@ -328,7 +330,7 @@ public class DBConnector {
 
     //delete history entry
 
-    public void deleteHistoryObject(String username, String keyword, String search_type, String time) {
+    public void deleteHistoryObject(String username, String keyword, String search_type, String time, String search_path) {
 
         Connection c = null;
         PreparedStatement stmt = null;
@@ -342,11 +344,12 @@ public class DBConnector {
             Statement statement = c.createStatement();
             statement.executeUpdate("PRAGMA foreign_keys = ON ;");
 
-            stmt = c.prepareStatement("DELETE FROM history WHERE username = ? AND keyword = ? AND search_type = ? AND time = ?;");
+            stmt = c.prepareStatement("DELETE FROM history WHERE username = ? AND keyword = ? AND search_type = ? AND time = ? AND search_path = ?;");
             stmt.setString(1, username);
             stmt.setString(2, keyword);
             stmt.setString(3, search_type);
             stmt.setString(4, time);
+            stmt.setString(5, search_path);
 
             stmt.executeUpdate();
             stmt.close();

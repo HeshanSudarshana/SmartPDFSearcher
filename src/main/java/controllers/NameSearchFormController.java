@@ -1,9 +1,13 @@
 package controllers;
 
+import business_logic.CrawlerConfig;
 import com.jfoenix.controls.*;
+import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import com.jfoenix.transitions.hamburger.HamburgerNextArrowBasicTransition;
 import business_logic.PDFFile;
 import javafx.animation.RotateTransition;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -82,10 +86,13 @@ public class NameSearchFormController implements Initializable {
     private MethodLoader methodLoader;
     private int addFav;
     private TreeItem<PDFFile> pdfFileTreeItem;
+    private CrawlerConfig crawlerConfig;
+    private ObservableList<PDFFile> pdfFileObservableList;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         methodLoader = new MethodLoader();
+        pdfFileObservableList = FXCollections.observableArrayList();
         addFav = 1;
         try {
             sidebarBox = FXMLLoader.load(getClass().getResource("/presentation/sidebarContent.fxml"));
@@ -155,6 +162,13 @@ public class NameSearchFormController implements Initializable {
     }
 
     public void searchBtnAction(ActionEvent actionEvent) {
+
+        crawlerConfig = new CrawlerConfig(searchDirectoryTxt.getText(), searchTxt.getText());
+        pdfFileObservableList = crawlerConfig.crawlByName(saveDirBtn.isSelected(),searchBtn);
+        pdfFileTreeItem = new RecursiveTreeItem<>(pdfFileObservableList, RecursiveTreeObject::getChildren);
+
+        searchResultsTreeTableView.setRoot(pdfFileTreeItem);
+        searchResultsTreeTableView.setShowRoot(false);
 
     }
 

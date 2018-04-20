@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -288,6 +289,68 @@ public class MethodLoader {
         } else {
             textField.setText("");
             textField.setAlignment(Pos.CENTER);
+        }
+    }
+
+    public void copiedSuccessfully() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Successful!");
+        alert.setHeaderText("Successfully copied the files!");
+        alert.setContentText("");
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.setMinHeight(Region.USE_PREF_SIZE);
+        dialogPane.setMinWidth(Region.USE_PREF_SIZE);
+        dialogPane.getStylesheets().add(getClass().getResource("/css/alert.css").toExternalForm());
+        dialogPane.getStyleClass().add("myDialog");
+        alert.showAndWait();
+    }
+
+    public void loginAlert(JFXButton button) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Login Alert");
+        alert.setGraphic(new ImageView(getClass().getResource("/icons/ic_power_settings_new_black_24dp_2x.png").toString()));
+        alert.setHeaderText(dataFlowManager.getUsername()+" Login?");
+        alert.setContentText("You need to be logged in to access save to directory! Do you want to Log in now?");
+        DialogPane dialogPane1 = alert.getDialogPane();
+        dialogPane1.setMinHeight(Region.USE_PREF_SIZE);
+        dialogPane1.setMinWidth(Region.USE_PREF_SIZE);
+        dialogPane1.getStylesheets().add(getClass().getResource("/css/alert.css").toExternalForm());
+        dialogPane1.getStyleClass().add("myDialog");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK){
+            loginFormLoad(button);
+        } else {
+            //do nothing
+        }
+    }
+
+    public String folderNameAlert(String givenTxt) {
+
+        TextInputDialog dialog = new TextInputDialog(givenTxt);
+        dialog.setTitle("Folder Name");
+        dialog.setHeaderText("Name of the folder?");
+        dialog.setContentText("");
+        DialogPane dialogPane = dialog.getDialogPane();
+        dialogPane.setMinHeight(Region.USE_PREF_SIZE);
+        dialogPane.setMinWidth(Region.USE_PREF_SIZE);
+        dialogPane.getStylesheets().add(getClass().getResource("/css/alert.css").toExternalForm());
+        dialogPane.getStyleClass().add("myDialog");
+
+        // getting user input
+        Optional<String> result = dialog.showAndWait();
+        dialog.getEditor().focusedProperty().addListener((arg0, oldValue, newValue)-> {
+            if(!newValue) {
+                if(!(dialog.getEditor().getText().matches("^([a-zA-Z0-9][^*/><?\\|:]*).+$"))) {
+                    dialogPane.lookupButton(ButtonType.OK).setDisable(false);
+                } else {
+                    dialogPane.lookupButton(ButtonType.OK).setDisable(true);
+                }
+            }
+        });
+        if (result.isPresent()){
+            return result.get();
+        } else {
+            return givenTxt;
         }
     }
 
