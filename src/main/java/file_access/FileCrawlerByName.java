@@ -68,4 +68,12 @@ public class FileCrawlerByName {
     public void setSearchTxt(String searchTxt) {
         this.searchTxt = searchTxt;
     }
+
+    public String getSavedDirectoryPath() {
+        return savedDirectoryPath;
+    }
+
+    public void setSavedDirectoryPath(String savedDirectoryPath) {
+        this.savedDirectoryPath = savedDirectoryPath;
+    }
 }

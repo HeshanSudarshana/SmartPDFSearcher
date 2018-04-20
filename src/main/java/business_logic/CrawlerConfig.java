@@ -16,14 +16,17 @@ public class CrawlerConfig {
     private MethodLoader methodLoader;
 
     public CrawlerConfig (String searchPath, String searchTxt) {
+        methodLoader = new MethodLoader();
         dataFlowManager = DataFlowManager.getInstance();
         fileCrawlerByName = new FileCrawlerByName(searchPath, dataFlowManager.getWorkspace(), searchTxt);
     }
 
-    public void CrawlByName(boolean saveChecker, JFXButton button, ObservableList<PDFFile> fileList, ArrayList<File> copyFileList) {
+    public void crawlByName(boolean saveChecker, JFXButton button, ObservableList<PDFFile> fileList, ArrayList<File> copyFileList) {
         if(saveChecker) {
             if(dataFlowManager.getUsername()!=null) {
-                String tempPath = dataFlowManager.getWorkspace() + "/" + fileCrawlerByName.getSearchTxt();
+                String folderName = methodLoader.folderNameAlert(fileCrawlerByName.getSearchTxt().toLowerCase());
+                String tempPath = dataFlowManager.getWorkspace() + "/" + folderName + "/";
+                fileCrawlerByName.setSavedDirectoryPath(tempPath);
                 new File(tempPath).mkdir();
                 fileCrawlerByName.crawlFiles(fileList, copyFileList);
                 fileCrawlerByName.copyFiles(copyFileList);

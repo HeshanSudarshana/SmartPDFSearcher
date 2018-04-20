@@ -19,8 +19,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class NameSearchFormController implements Initializable {
@@ -88,11 +90,13 @@ public class NameSearchFormController implements Initializable {
     private TreeItem<PDFFile> pdfFileTreeItem;
     private CrawlerConfig crawlerConfig;
     private ObservableList<PDFFile> pdfFileObservableList;
+    private ArrayList<File> copyFileList;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         methodLoader = new MethodLoader();
         pdfFileObservableList = FXCollections.observableArrayList();
+        copyFileList = new ArrayList<>();
         addFav = 1;
         try {
             sidebarBox = FXMLLoader.load(getClass().getResource("/presentation/sidebarContent.fxml"));
@@ -164,11 +168,15 @@ public class NameSearchFormController implements Initializable {
     public void searchBtnAction(ActionEvent actionEvent) {
 
         crawlerConfig = new CrawlerConfig(searchDirectoryTxt.getText(), searchTxt.getText());
-        pdfFileObservableList = crawlerConfig.crawlByName(saveDirBtn.isSelected(),searchBtn);
+        pdfFileObservableList.clear();
+        copyFileList.clear();
+
         pdfFileTreeItem = new RecursiveTreeItem<>(pdfFileObservableList, RecursiveTreeObject::getChildren);
 
         searchResultsTreeTableView.setRoot(pdfFileTreeItem);
         searchResultsTreeTableView.setShowRoot(false);
+
+        crawlerConfig.crawlByName(saveDirBtn.isSelected(),searchBtn,pdfFileObservableList,copyFileList);
 
     }
 
