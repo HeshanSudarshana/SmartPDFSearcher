@@ -1,8 +1,12 @@
 package file_access;
 
 import business_logic.PDFFile;
+import com.jfoenix.controls.JFXTreeTableView;
+import com.jfoenix.controls.RecursiveTreeItem;
+import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.TreeItem;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;

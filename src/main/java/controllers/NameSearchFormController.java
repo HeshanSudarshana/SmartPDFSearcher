@@ -19,6 +19,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -82,6 +83,9 @@ public class NameSearchFormController implements Initializable {
 
     @FXML
     private JFXTreeTableView<PDFFile> searchResultsTreeTableView;
+
+    @FXML
+    private JFXButton fileOpenBtn;
 
     private HamburgerNextArrowBasicTransition transition;
     private RotateTransition rt;
@@ -176,11 +180,38 @@ public class NameSearchFormController implements Initializable {
         searchResultsTreeTableView.setRoot(pdfFileTreeItem);
         searchResultsTreeTableView.setShowRoot(false);
 
-        crawlerConfig.crawlByName(saveDirBtn.isSelected(),searchBtn,pdfFileObservableList,copyFileList);
+        crawlerConfig.crawlByName(saveDirBtn.isSelected(),searchBtn,pdfFileObservableList,copyFileList,searchResultsTreeTableView,pdfFileTreeItem);
 
     }
 
     public void browseBtnAction(ActionEvent actionEvent) {
         methodLoader.loadDirectorySelector(searchDirectoryTxt, "Select a Directory to Search");
+    }
+
+    public void fileOpenBtnAction(ActionEvent actionEvent) {
+        TreeItem<PDFFile> selectedFile = searchResultsTreeTableView.getSelectionModel().getSelectedItem();
+        if(selectedFile != null){
+            openPDFFile(selectedFile.getValue());
+        } else {
+            methodLoader.selectFileAlert();
+        }
+    }
+
+    public void openPDFFile(PDFFile pdfFile) {
+        File fileToBeOpened = new File(pdfFile.getFilePath().get());
+        System.out.println(String.valueOf(pdfFile.getFilePath()));
+        if(fileToBeOpened.exists()) {
+            if(Desktop.isDesktopSupported()) {
+                try {
+                    Desktop.getDesktop().open(fileToBeOpened);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                methodLoader.desktopEnvNotSupportedAlert();
+            }
+        } else {
+            methodLoader.fileDoesnotExistAlert();
+        }
     }
 }

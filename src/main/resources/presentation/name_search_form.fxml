@@ -59,7 +59,7 @@
                </graphic>
             </JFXButton>
          </children></AnchorPane>
-      <JFXButton fx:id="addFavBtn" contentDisplay="GRAPHIC_ONLY" layoutX="732.0" layoutY="438.0" mnemonicParsing="false" onAction="#addFavBtnAction" prefHeight="45.0" prefWidth="46.0" styleClass="round_btn" stylesheets="@../css/round_btn.css" text="Search">
+      <JFXButton fx:id="addFavBtn" contentDisplay="GRAPHIC_ONLY" layoutX="732.0" layoutY="474.0" mnemonicParsing="false" onAction="#addFavBtnAction" prefHeight="45.0" prefWidth="46.0" styleClass="round_btn" stylesheets="@../css/round_btn.css" text="Search">
          <graphic>
             <ImageView fx:id="heartIcon" fitHeight="29.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -78,5 +78,14 @@
          </graphic>
       </JFXButton>
       <JFXDrawer fx:id="sidebarDrawer" defaultDrawerSize="85.0" layoutX="830.0" layoutY="97.0" prefHeight="300.0" prefWidth="85.0" />
+      <JFXButton fx:id="fileOpenBtn" contentDisplay="GRAPHIC_ONLY" layoutX="732.0" layoutY="413.0" mnemonicParsing="false" onAction="#fileOpenBtnAction" prefHeight="45.0" prefWidth="46.0" styleClass="round_btn" stylesheets="@../css/round_btn.css" text="Search">
+         <graphic>
+            <ImageView fx:id="heartIcon1" fitHeight="29.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icons/icons8-pdf-50.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
     </children>
 </AnchorPane>

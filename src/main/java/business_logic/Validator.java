@@ -83,7 +83,7 @@ public class Validator {
 
         } else if (passwordImg.getImage() != null) {
 
-            passwordAlert("Password should be at least 8 characters long with at least one uppercase letter, lowercase letter, symbol and a number included. user already ");
+            passwordAlert("Password should be at least 8 characters long with at least one uppercase letter, lowercase letter, symbol and a number included.");
             return false;
 
         } else if (confirmPasswordImg.getImage() != null) {

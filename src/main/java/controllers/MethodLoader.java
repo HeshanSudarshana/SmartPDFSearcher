@@ -4,6 +4,7 @@ import business_logic.DataFlowManager;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.animation.RotateTransition;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -329,7 +330,7 @@ public class MethodLoader {
         TextInputDialog dialog = new TextInputDialog(givenTxt);
         dialog.setTitle("Folder Name");
         dialog.setHeaderText("Name of the folder?");
-        dialog.setContentText("");
+        dialog.setContentText("Please do not enter <>?[]/\\|: when entering the name. Else the search result will be the name of the folder!");
         DialogPane dialogPane = dialog.getDialogPane();
         dialogPane.setMinHeight(Region.USE_PREF_SIZE);
         dialogPane.setMinWidth(Region.USE_PREF_SIZE);
@@ -338,20 +339,53 @@ public class MethodLoader {
 
         // getting user input
         Optional<String> result = dialog.showAndWait();
-        dialog.getEditor().focusedProperty().addListener((arg0, oldValue, newValue)-> {
-            if(!newValue) {
-                if(!(dialog.getEditor().getText().matches("^([a-zA-Z0-9][^*/><?\\|:]*).+$"))) {
-                    dialogPane.lookupButton(ButtonType.OK).setDisable(false);
-                } else {
-                    dialogPane.lookupButton(ButtonType.OK).setDisable(true);
-                }
-            }
-        });
+
         if (result.isPresent()){
+            if (!result.get().matches("^([a-zA-Z0-9][^*/><?\\|:]*).+$")) {
+                return givenTxt;
+            }
             return result.get();
         } else {
             return givenTxt;
         }
     }
 
+    public void selectFileAlert() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("File Not Selected!");
+        alert.setHeaderText("Please select a file from the list!");
+        alert.setContentText("");
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.setMinHeight(Region.USE_PREF_SIZE);
+        dialogPane.setMinWidth(Region.USE_PREF_SIZE);
+        dialogPane.getStylesheets().add(getClass().getResource("/css/alert.css").toExternalForm());
+        dialogPane.getStyleClass().add("myDialog");
+        alert.showAndWait();
+    }
+
+    public void fileDoesnotExistAlert() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error!");
+        alert.setHeaderText("The File does not exist!");
+        alert.setContentText("");
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.setMinHeight(Region.USE_PREF_SIZE);
+        dialogPane.setMinWidth(Region.USE_PREF_SIZE);
+        dialogPane.getStylesheets().add(getClass().getResource("/css/alert.css").toExternalForm());
+        dialogPane.getStyleClass().add("myDialog");
+        alert.showAndWait();
+    }
+
+    public void desktopEnvNotSupportedAlert(){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error!");
+        alert.setHeaderText("Desktop environment is not supported!");
+        alert.setContentText("");
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.setMinHeight(Region.USE_PREF_SIZE);
+        dialogPane.setMinWidth(Region.USE_PREF_SIZE);
+        dialogPane.getStylesheets().add(getClass().getResource("/css/alert.css").toExternalForm());
+        dialogPane.getStyleClass().add("myDialog");
+        alert.showAndWait();
+    }
 }
