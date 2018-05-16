@@ -11,7 +11,11 @@ import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.RecursiveAction;
 
 public class FileCrawlerByName {
 
@@ -43,8 +47,8 @@ public class FileCrawlerByName {
                     if (type.length > 1) {
                         if (type[1].equals("pdf")) {
                             if(type[0].toLowerCase().contains(getSearchTxt().toLowerCase())) {
-                                copyFileList.add(file);
-                                fileList.add(new PDFFile(file));
+                                    copyFileList.add(file);
+                                    fileList.add(new PDFFile(file));
                             }
                         }
                     }
@@ -52,7 +56,6 @@ public class FileCrawlerByName {
             }
         }
     }
-
 
     //copy a selected file to a given directory
     public void copyFiles(ArrayList<File> copyFileList) {
@@ -80,4 +83,6 @@ public class FileCrawlerByName {
     public void setSavedDirectoryPath(String savedDirectoryPath) {
         this.savedDirectoryPath = savedDirectoryPath;
     }
+
+
 }

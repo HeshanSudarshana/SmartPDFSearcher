@@ -1,6 +1,7 @@
 package controllers;
 
 import business_logic.DataFlowManager;
+import business_logic.UserConfig;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.animation.RotateTransition;
@@ -23,6 +24,7 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import javax.jws.soap.SOAPBinding;
 import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
@@ -30,6 +32,7 @@ import java.util.Optional;
 public class MethodLoader {
 
     private DataFlowManager dataFlowManager = DataFlowManager.getInstance();
+    private UserConfig userConfig = new UserConfig();
 
     public void createAccountFormLoad(JFXButton btn) {
         Parent root = null;
@@ -214,13 +217,15 @@ public class MethodLoader {
         }
     }
 
-    public int heartAnimation(int addFav, ImageView heartIcon) {
-        if(addFav==1) {
-            heartIcon.setImage(new Image(getClass().getResourceAsStream("/icons/001-like.png")));
-            addFav *= -1;
-        } else {
+    public int heartAnimation(int addFav, ImageView heartIcon, String username, String path) {
+        if(heartIcon.getImage().equals(getClass().getResourceAsStream("/icons/001-like.png"))) {
             heartIcon.setImage(new Image(getClass().getResourceAsStream("/icons/002-like-1.png")));
-            addFav *= -1;
+            userConfig.addFavouriteObject(username, path);
+        } else if(heartIcon.getImage().equals(getClass().getResourceAsStream("/icons/002-like-1.png"))){
+            heartIcon.setImage(new Image(getClass().getResourceAsStream("/icons/001-like.png")));
+            userConfig.deleteFavouriteObject(username, path);
+        } else {
+            System.out.println("There's something wrong with the heart!");
         }
         return addFav;
     }
@@ -311,7 +316,7 @@ public class MethodLoader {
         alert.setTitle("Login Alert");
         alert.setGraphic(new ImageView(getClass().getResource("/icons/ic_power_settings_new_black_24dp_2x.png").toString()));
         alert.setHeaderText(dataFlowManager.getUsername()+" Login?");
-        alert.setContentText("You need to be logged in to access save to directory! Do you want to Log in now?");
+        alert.setContentText("You need to be logged in to access that Feature! Do you want to Log in now?");
         DialogPane dialogPane1 = alert.getDialogPane();
         dialogPane1.setMinHeight(Region.USE_PREF_SIZE);
         dialogPane1.setMinWidth(Region.USE_PREF_SIZE);

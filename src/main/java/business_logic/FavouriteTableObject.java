@@ -12,8 +12,30 @@ public class FavouriteTableObject extends RecursiveTreeObject<FavouriteTableObje
 
     public FavouriteTableObject(FavouriteObject favouriteObject) {
 
-        this.username = new SimpleStringProperty(favouriteObject.getUsername());
-        this.path = new SimpleStringProperty(favouriteObject.getPath());
+        this.setUsername(new SimpleStringProperty(favouriteObject.getUsername()));
+        this.setPath(new SimpleStringProperty(favouriteObject.getPath()));
 
+    }
+
+    public FavouriteObject convertToFavouriteObject() {
+        FavouriteObject favouriteObject = new FavouriteObject(this.getUsername().get(), this.getPath().get());
+        return favouriteObject;
+    }
+
+
+    public StringProperty getUsername() {
+        return username;
+    }
+
+    public void setUsername(StringProperty username) {
+        this.username = username;
+    }
+
+    public StringProperty getPath() {
+        return path;
+    }
+
+    public void setPath(StringProperty path) {
+        this.path = path;
     }
 }

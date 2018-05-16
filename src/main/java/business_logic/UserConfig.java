@@ -55,12 +55,12 @@ public class UserConfig {
         dbConnector.deleteFavoriteObject(username, path);
     }
 
-    public void deleteAllFavourites(String username) {
-        dbConnector.deleteAllFavourites(username);
-    }
-
     public void addFavouriteObject(String username, String path) {
         dbConnector.addToFavourites(username, path);
+    }
+
+    public void deleteAllFavourites(String username) {
+        dbConnector.deleteAllFavourites(username);
     }
 
 }

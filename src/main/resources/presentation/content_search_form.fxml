@@ -77,7 +77,7 @@
                 </ImageView>
             </graphic>
         </JFXButton>
-        <JFXDrawer fx:id="sidebarDrawer" defaultDrawerSize="85.0" layoutX="830.0" layoutY="97.0" prefHeight="300.0" prefWidth="85.0" />
+        <JFXDrawer fx:id="sidebarDrawer" defaultDrawerSize="85.0" layoutX="829.0" layoutY="93.0" prefHeight="300.0" prefWidth="85.0" />
       <JFXButton fx:id="fileOpenBtn" contentDisplay="GRAPHIC_ONLY" layoutX="733.0" layoutY="414.0" mnemonicParsing="false" onAction="#addFavBtnAction" prefHeight="45.0" prefWidth="46.0" styleClass="round_btn" stylesheets="@../css/round_btn.css" text="Search">
          <graphic>
             <ImageView fx:id="heartIcon1" fitHeight="29.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">

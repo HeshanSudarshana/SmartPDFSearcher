@@ -3,6 +3,7 @@ package business_logic;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import user_access.FavouriteObject;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -45,5 +46,10 @@ public class PDFFile extends RecursiveTreeObject<PDFFile> {
 
     public void setDateModified(StringProperty dateModified) {
         this.dateModified = dateModified;
+    }
+
+    public FavouriteObject PDFFiletoFavouriteObject(String username) {
+        FavouriteObject favouriteObject = new FavouriteObject(username, this.getFilePath().get());
+        return favouriteObject;
     }
 }

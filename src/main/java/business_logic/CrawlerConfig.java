@@ -4,7 +4,6 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTreeTableView;
 import controllers.MethodLoader;
 import file_access.FileCrawlerByName;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TreeItem;
 
@@ -17,7 +16,7 @@ public class CrawlerConfig {
     private DataFlowManager dataFlowManager;
     private MethodLoader methodLoader;
 
-    public CrawlerConfig (String searchPath, String searchTxt) {
+    public CrawlerConfig(String searchPath, String searchTxt) {
         methodLoader = new MethodLoader();
         dataFlowManager = DataFlowManager.getInstance();
         fileCrawlerByName = new FileCrawlerByName(searchPath, dataFlowManager.getWorkspace(), searchTxt);

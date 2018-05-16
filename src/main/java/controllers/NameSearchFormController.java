@@ -1,30 +1,40 @@
 package controllers;
 
 import business_logic.CrawlerConfig;
+import business_logic.DataFlowManager;
 import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import com.jfoenix.transitions.hamburger.HamburgerNextArrowBasicTransition;
 import business_logic.PDFFile;
 import javafx.animation.RotateTransition;
+import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import user_access.DBConnector;
 
+import javax.xml.crypto.Data;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 public class NameSearchFormController implements Initializable {
 
@@ -87,6 +97,9 @@ public class NameSearchFormController implements Initializable {
     @FXML
     private JFXButton fileOpenBtn;
 
+    @FXML
+    private JFXButton addFavBtn;
+
     private HamburgerNextArrowBasicTransition transition;
     private RotateTransition rt;
     private MethodLoader methodLoader;
@@ -95,13 +108,14 @@ public class NameSearchFormController implements Initializable {
     private CrawlerConfig crawlerConfig;
     private ObservableList<PDFFile> pdfFileObservableList;
     private ArrayList<File> copyFileList;
+    private DBConnector dbConnector;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        dbConnector = new DBConnector();
         methodLoader = new MethodLoader();
         pdfFileObservableList = FXCollections.observableArrayList();
         copyFileList = new ArrayList<>();
-        addFav = 1;
         try {
             sidebarBox = FXMLLoader.load(getClass().getResource("/presentation/sidebarContent.fxml"));
         } catch (IOException e) {
@@ -142,7 +156,24 @@ public class NameSearchFormController implements Initializable {
         date.setCellValueFactory(param -> param.getValue().getValue().getDateModified());
 
         searchResultsTreeTableView.getColumns().setAll(name, path, date);
+        searchResultsTreeTableView.setPlaceholder(new Label("No PDFs to show!"));
 
+        searchResultsTreeTableView.getSelectionModel().selectedItemProperty().addListener((ChangeListener) (observable, oldValue, newValue) -> {
+
+            TreeItem<PDFFile> selectedItem = (TreeItem<PDFFile>) newValue;
+            System.out.println("Selected Text : " + selectedItem.getValue().getFileName());
+            if (DataFlowManager.getInstance().getUsername()!=null) {
+                if(dbConnector.getFavourites(DataFlowManager.getInstance().getUserID()).contains(selectedItem.getValue().PDFFiletoFavouriteObject(DataFlowManager.getInstance().getUsername()))) {
+                    heartIcon.setImage(new Image(getClass().getResourceAsStream("/icons/002-like-1.png")));
+                } else {
+                    heartIcon.setImage(new Image(getClass().getResourceAsStream("/icons/001-like.png")));
+                }
+            } else {
+                heartIcon.setImage(new Image(getClass().getResourceAsStream("/icons/001-like.png")));
+            }
+        });
+
+//        Set<Thread> threadSet = Thread.getAllStackTraces().keySet(); Thread[] threadArray = threadSet.toArray(new Thread[threadSet.size()]); for (Thread t : threadArray) { if (t.isAlive() && !t.isDaemon()) { System.out.println(t); } }
     }
 
     public void sidebarHamClicked(MouseEvent mouseEvent) {
@@ -166,21 +197,42 @@ public class NameSearchFormController implements Initializable {
     }
 
     public void addFavBtnAction(ActionEvent actionEvent) {
-        addFav = methodLoader.heartAnimation(addFav, heartIcon);
+        if(DataFlowManager.getInstance().getUsername()!=null) {
+            methodLoader.heartAnimation(addFav, heartIcon, DataFlowManager.getInstance().getUsername(), String.valueOf(searchResultsTreeTableView.getSelectionModel().getSelectedItem().getValue().getFilePath()));
+        } else {
+            methodLoader.loginAlert(addFavBtn);
+        }
+
     }
 
     public void searchBtnAction(ActionEvent actionEvent) {
 
-        crawlerConfig = new CrawlerConfig(searchDirectoryTxt.getText(), searchTxt.getText());
-        pdfFileObservableList.clear();
-        copyFileList.clear();
+        try {
+            Runnable task = () -> {
 
-        pdfFileTreeItem = new RecursiveTreeItem<>(pdfFileObservableList, RecursiveTreeObject::getChildren);
+                crawlerConfig = new CrawlerConfig(searchDirectoryTxt.getText(), searchTxt.getText());
+                pdfFileObservableList.clear();
+                copyFileList.clear();
+                pdfFileTreeItem = new RecursiveTreeItem<>(pdfFileObservableList, RecursiveTreeObject::getChildren);
 
-        searchResultsTreeTableView.setRoot(pdfFileTreeItem);
-        searchResultsTreeTableView.setShowRoot(false);
+                Thread thread = Thread.currentThread();
 
-        crawlerConfig.crawlByName(saveDirBtn.isSelected(),searchBtn,pdfFileObservableList,copyFileList,searchResultsTreeTableView,pdfFileTreeItem);
+                crawlerConfig.crawlByName(saveDirBtn.isSelected(),searchBtn,pdfFileObservableList,copyFileList,searchResultsTreeTableView,pdfFileTreeItem);
+
+                Platform.runLater(() -> {
+                    searchResultsTreeTableView.setRoot(pdfFileTreeItem);
+                    searchResultsTreeTableView.setShowRoot(false);
+                });
+            };
+
+            new Thread(task).start();
+
+//            Set<Thread> threadSet = Thread.getAllStackTraces().keySet(); Thread[] threadArray = threadSet.toArray(new Thread[threadSet.size()]); for (Thread t : threadArray) { if (t.isAlive() && !t.isDaemon()) { System.out.println(t); } }
+
+        } catch (ConcurrentModificationException error) {
+            //
+        }
+
 
     }
 
@@ -214,4 +266,6 @@ public class NameSearchFormController implements Initializable {
             methodLoader.fileDoesnotExistAlert();
         }
     }
+
+
 }
