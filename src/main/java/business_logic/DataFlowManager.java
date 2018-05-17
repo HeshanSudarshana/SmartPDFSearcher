@@ -8,6 +8,7 @@ public class DataFlowManager {
     private String username;
     private int userID;
     private String workspace;
+    private String previousStage;
 
     private DataFlowManager() { }
 
@@ -53,5 +54,13 @@ public class DataFlowManager {
 
     public void setWorkspace(String workspace) {
         this.workspace = workspace;
+    }
+
+    public String getPreviousStage() {
+        return previousStage;
+    }
+
+    public void setPreviousStage(String previousStage) {
+        this.previousStage = previousStage;
     }
 }

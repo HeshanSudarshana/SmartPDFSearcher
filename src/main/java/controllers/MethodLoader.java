@@ -1,9 +1,12 @@
 package controllers;
 
 import business_logic.DataFlowManager;
+import business_logic.PDFFile;
 import business_logic.UserConfig;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.JFXTreeTableView;
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import javafx.animation.RotateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -23,16 +26,21 @@ import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import user_access.DBConnector;
+import user_access.FavouriteObject;
 
 import javax.jws.soap.SOAPBinding;
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLOutput;
+import java.util.ArrayList;
 import java.util.Optional;
 
 public class MethodLoader {
 
     private DataFlowManager dataFlowManager = DataFlowManager.getInstance();
     private UserConfig userConfig = new UserConfig();
+    private DBConnector dbConnector = new DBConnector();
 
     public void createAccountFormLoad(JFXButton btn) {
         Parent root = null;
@@ -217,17 +225,45 @@ public class MethodLoader {
         }
     }
 
-    public int heartAnimation(int addFav, ImageView heartIcon, String username, String path) {
-        if(heartIcon.getImage().equals(getClass().getResourceAsStream("/icons/001-like.png"))) {
+//    public void heartAnimation( ImageView heartIcon, String username, String path) {
+//        if(heartIcon.getImage().equals(getClass().getResourceAsStream("/icons/001-like.png"))) {
+//            heartIcon.setImage(new Image(getClass().getResourceAsStream("/icons/002-like-1.png")));
+//            userConfig.addFavouriteObject(username, path);
+//        } else if(heartIcon.getImage().equals(getClass().getResourceAsStream("/icons/002-like-1.png"))){
+//            heartIcon.setImage(new Image(getClass().getResourceAsStream("/icons/001-like.png")));
+//            userConfig.deleteFavouriteObject(username, path);
+//        } else {
+//            System.out.println("There's something wrong with the heart!");
+//            System.out.println(heartIcon.getImage());
+//            System.out.println(getClass().getResourceAsStream("/icons/001-like.png"));
+//        }
+//    }
+
+    public void heartAnimation(ImageView heartIcon, String username, String path, JFXTreeTableView<PDFFile> treeTableView) {
+        if(!isInTheDB(treeTableView)) {
             heartIcon.setImage(new Image(getClass().getResourceAsStream("/icons/002-like-1.png")));
             userConfig.addFavouriteObject(username, path);
-        } else if(heartIcon.getImage().equals(getClass().getResourceAsStream("/icons/002-like-1.png"))){
+        } else {
             heartIcon.setImage(new Image(getClass().getResourceAsStream("/icons/001-like.png")));
             userConfig.deleteFavouriteObject(username, path);
-        } else {
-            System.out.println("There's something wrong with the heart!");
         }
-        return addFav;
+    }
+
+    public boolean isInTheDB(JFXTreeTableView<PDFFile> treeTableView) {
+        ArrayList<FavouriteObject> arrayList = dbConnector.getFavourites(DataFlowManager.getInstance().getUsername());
+        ArrayList<String> pathList = new ArrayList<>();
+        for (FavouriteObject i: arrayList) {
+            pathList.add(i.getPath());
+        }
+        if(pathList.contains(treeTableView.getSelectionModel().getSelectedItem().getValue().getFilePath().get())) {
+            return true;
+        } else {
+            for (FavouriteObject i: arrayList) {
+                System.out.println(i.getPath());
+            }
+            System.out.println("other: " + treeTableView.getSelectionModel().getSelectedItem().getValue().PDFFiletoFavouriteObject(DataFlowManager.getInstance().getUsername()).getPath() );
+            return false;
+        }
     }
 
     public void logoutAndLoginAlert(String username, int userID, String workspace, String contentText) {
@@ -392,5 +428,16 @@ public class MethodLoader {
         dialogPane.getStylesheets().add(getClass().getResource("/css/alert.css").toExternalForm());
         dialogPane.getStyleClass().add("myDialog");
         alert.showAndWait();
+    }
+
+    public void loadNextForm (JFXButton button) throws IOException {
+        String previous = DataFlowManager.getInstance().getPreviousStage();
+        if(previous.equals("start_page")) {
+            startFormLoad((Stage) button.getScene().getWindow());
+        } else if (previous.equals("name_search")) {
+            nameSearchFormLoad(button);
+        } else if (previous.equals("content_search")) {
+            contentSearchFormLoad(button);
+        }
     }
 }

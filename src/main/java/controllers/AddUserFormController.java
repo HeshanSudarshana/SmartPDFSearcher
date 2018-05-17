@@ -111,15 +111,16 @@ public class AddUserFormController implements Initializable{
                 methodLoader.successfullyLoggedinAlert(usernameTxt.getText());
             }
 
-            methodLoader.startFormLoad((Stage) signupBtn.getScene().getWindow());
+            String previous = DataFlowManager.getInstance().getPreviousStage();
+            methodLoader.loadNextForm(signupBtn);
         }
     }
 
 
     public void cancelBtn(ActionEvent actionEvent) throws IOException {
 
-        methodLoader.startFormLoad((Stage) signupBtn.getScene().getWindow());
-
+        String previous = DataFlowManager.getInstance().getPreviousStage();
+        methodLoader.loadNextForm(signupBtn);
     }
 
     public void browseBtnAction(ActionEvent actionEvent) {

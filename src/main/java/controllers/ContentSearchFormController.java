@@ -1,5 +1,7 @@
 package controllers;
 
+import business_logic.DataFlowManager;
+import business_logic.PDFFile;
 import com.jfoenix.controls.*;
 import com.jfoenix.transitions.hamburger.HamburgerNextArrowBasicTransition;
 import javafx.animation.RotateTransition;
@@ -50,15 +52,21 @@ public class ContentSearchFormController implements Initializable {
     @FXML
     private JFXButton backBtn;
 
+    @FXML
+    private JFXButton addFavBtn;
+
+    @FXML
+    private JFXTreeTableView<PDFFile> searchResultsTreeTableView;
+
     private HamburgerNextArrowBasicTransition transition;
     private RotateTransition rt;
     private MethodLoader methodLoader;
-    private int addFav;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         methodLoader = new MethodLoader();
-        addFav = 1;
+        DataFlowManager.getInstance().setPreviousStage("content_search");
         try {
             sidebarBox = FXMLLoader.load(getClass().getResource("/presentation/sidebarContent.fxml"));
         } catch (IOException e) {
@@ -117,6 +125,10 @@ public class ContentSearchFormController implements Initializable {
     }
 
     public void addFavBtnAction(ActionEvent actionEvent) {
-        addFav = methodLoader.heartAnimation(addFav, heartIcon);
+        if(DataFlowManager.getInstance().getUsername()!=null) {
+            methodLoader.heartAnimation(heartIcon, DataFlowManager.getInstance().getUsername(), String.valueOf(searchResultsTreeTableView.getSelectionModel().getSelectedItem().getValue().getFilePath()), searchResultsTreeTableView);
+        } else {
+            methodLoader.loginAlert(addFavBtn);
+        }
     }
 }

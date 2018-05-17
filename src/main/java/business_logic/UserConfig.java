@@ -1,5 +1,6 @@
 package business_logic;
 
+import javafx.beans.property.StringProperty;
 import user_access.DBConnector;
 import user_access.FavouriteObject;
 import user_access.HistoryObject;
@@ -33,8 +34,8 @@ public class UserConfig {
         dbConnector.addToHistory(username, keyword, search_type, search_path);
     }
 
-    public ArrayList<HistoryObject> getHistory(int userID) {
-        ArrayList<HistoryObject> list = dbConnector.getHistory(userID);
+    public ArrayList<HistoryObject> getHistory(String username) {
+        ArrayList<HistoryObject> list = dbConnector.getHistory(username);
         return list;
     }
 
@@ -46,8 +47,8 @@ public class UserConfig {
         dbConnector.deleteAllHistory(username);
     }
 
-    public ArrayList<FavouriteObject> getFavourites(int userID) {
-        ArrayList<FavouriteObject> list = dbConnector.getFavourites(userID);
+    public ArrayList<FavouriteObject> getFavourites(String username) {
+        ArrayList<FavouriteObject> list = dbConnector.getFavourites(username);
         return list;
     }
 

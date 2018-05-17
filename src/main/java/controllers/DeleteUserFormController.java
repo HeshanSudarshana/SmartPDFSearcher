@@ -50,12 +50,12 @@ public class DeleteUserFormController implements Initializable {
             if (dataFlowManager.getUsername().equals(usernameTxt.getText())) {
                 dataFlowManager.logout();
             }
-            methodLoader.startFormLoad((Stage) deleteBtn.getScene().getWindow());
+            methodLoader.loadNextForm(deleteBtn);
         }
     }
 
     public void cancelBtnAction(ActionEvent actionEvent) throws IOException {
-        methodLoader.startFormLoad((Stage) deleteBtn.getScene().getWindow());
+        methodLoader.loadNextForm(deleteBtn);
     }
 
 }

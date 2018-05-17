@@ -4,6 +4,7 @@ package controllers;
 import business_logic.DataFlowManager;
 import business_logic.UserConfig;
 import business_logic.Validator;
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
@@ -28,6 +29,12 @@ public class LoginFormController implements Initializable {
 
     @FXML
     private JFXPasswordField passwordTxt;
+
+    @FXML
+    private JFXButton cancelBtn;
+
+    @FXML
+    private JFXButton loginBtn;
 
     private DataFlowManager dataFlowManager;
     private Validator validator;
@@ -60,14 +67,15 @@ public class LoginFormController implements Initializable {
                 }
             } else {
                 dataFlowManager.login(usernameTxt.getText(), user.getUserID(), user.getWorkspacePath());
+                System.out.println(user.getUserID());
                 methodLoader.successfullyLoggedinAlert(usernameTxt.getText());
             }
-            methodLoader.startFormLoad((Stage) usernameTxt.getScene().getWindow());
+            methodLoader.loadNextForm(cancelBtn);
         }
     }
 
     public void cancelBtnAction(ActionEvent actionEvent) throws IOException {
-        methodLoader.startFormLoad((Stage) usernameTxt.getScene().getWindow());
+        methodLoader.loadNextForm(cancelBtn);
     }
 
 }

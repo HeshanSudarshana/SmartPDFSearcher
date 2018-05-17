@@ -42,7 +42,7 @@ public class DBConnector {
 
     //add history to database (keeping records)
 
-    public void addToHistory(String username, String path, String searchType, String searchPath) {
+    public void addToHistory(String username, String keyword, String searchType, String searchPath) {
 
         Connection c = null;
         PreparedStatement stmt = null;
@@ -58,9 +58,9 @@ public class DBConnector {
 
             stmt = c.prepareStatement("INSERT INTO history (username, keyword, search_type, time, search_path) VALUES (?, ?, ?, ?, ?);");
             stmt.setString(1, username);
-            stmt.setString(2, path);
+            stmt.setString(2, keyword);
             stmt.setString(3, searchType);
-            stmt.setString(4, searchPath);
+            stmt.setString(5, searchPath);
 
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
             LocalDateTime now = LocalDateTime.now();
@@ -231,7 +231,7 @@ public class DBConnector {
 
     //return history details
 
-    public ArrayList<HistoryObject> getHistory(int userID) {
+    public ArrayList<HistoryObject> getHistory(String username) {
 
         Connection c = null;
         PreparedStatement stmt = null;
@@ -245,15 +245,14 @@ public class DBConnector {
             Statement statement = c.createStatement();
             statement.executeUpdate("PRAGMA foreign_keys = ON ;");
 
-            stmt = c.prepareStatement("SELECT * FROM history WHERE userid = ?;");
-            stmt.setInt(1, userID);
+            stmt = c.prepareStatement("SELECT * FROM history WHERE username = ?;");
+            stmt.setString(1, username);
 
             ResultSet resultSet = stmt.executeQuery();
 
             ArrayList<HistoryObject> list = new ArrayList<>();
 
             while (resultSet.next()) {
-                String username = resultSet.getString("username");
                 String keyword = resultSet.getString("keyword");
                 String search_type = resultSet.getString("search_type");
                 String time = resultSet.getString("time");
@@ -282,7 +281,7 @@ public class DBConnector {
 
     //return favourite details
 
-    public ArrayList<FavouriteObject> getFavourites(int userID) {
+    public ArrayList<FavouriteObject> getFavourites(String username) {
 
         Connection c = null;
         PreparedStatement stmt = null;
@@ -296,15 +295,14 @@ public class DBConnector {
             Statement statement = c.createStatement();
             statement.executeUpdate("PRAGMA foreign_keys = ON ;");
 
-            stmt = c.prepareStatement("SELECT * FROM favourites WHERE userid = ?;");
-            stmt.setInt(1, userID);
+            stmt = c.prepareStatement("SELECT * FROM favourites WHERE username = ?;");
+            stmt.setString(1, username);
 
             ResultSet resultSet = stmt.executeQuery();
 
             ArrayList<FavouriteObject> list = new ArrayList<>();
 
             while (resultSet.next()) {
-                String username = resultSet.getString("username");
                 String path = resultSet.getString("path");
 
                 FavouriteObject temp = new FavouriteObject(username, path);

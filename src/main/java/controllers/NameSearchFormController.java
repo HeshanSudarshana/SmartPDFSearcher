@@ -25,6 +25,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import user_access.DBConnector;
+import user_access.FavouriteObject;
 
 import javax.xml.crypto.Data;
 import java.awt.*;
@@ -103,7 +104,6 @@ public class NameSearchFormController implements Initializable {
     private HamburgerNextArrowBasicTransition transition;
     private RotateTransition rt;
     private MethodLoader methodLoader;
-    private int addFav;
     private TreeItem<PDFFile> pdfFileTreeItem;
     private CrawlerConfig crawlerConfig;
     private ObservableList<PDFFile> pdfFileObservableList;
@@ -116,6 +116,7 @@ public class NameSearchFormController implements Initializable {
         methodLoader = new MethodLoader();
         pdfFileObservableList = FXCollections.observableArrayList();
         copyFileList = new ArrayList<>();
+        DataFlowManager.getInstance().setPreviousStage("name_search");
         try {
             sidebarBox = FXMLLoader.load(getClass().getResource("/presentation/sidebarContent.fxml"));
         } catch (IOException e) {
@@ -161,13 +162,19 @@ public class NameSearchFormController implements Initializable {
         searchResultsTreeTableView.getSelectionModel().selectedItemProperty().addListener((ChangeListener) (observable, oldValue, newValue) -> {
 
             TreeItem<PDFFile> selectedItem = (TreeItem<PDFFile>) newValue;
-            System.out.println("Selected Text : " + selectedItem.getValue().getFileName());
-            if (DataFlowManager.getInstance().getUsername()!=null) {
-                if(dbConnector.getFavourites(DataFlowManager.getInstance().getUserID()).contains(selectedItem.getValue().PDFFiletoFavouriteObject(DataFlowManager.getInstance().getUsername()))) {
+            System.out.println("Selected Text : " + selectedItem.getValue().getFileName().get());
+            if(DataFlowManager.getInstance().getUsername()!=null){
+                ArrayList<FavouriteObject> arrayList = dbConnector.getFavourites(DataFlowManager.getInstance().getUsername());
+                ArrayList<String> pathList = new ArrayList<>();
+                for(FavouriteObject i: arrayList) {
+                    pathList.add(i.getPath());
+                }
+                if(pathList.contains(selectedItem.getValue().getFilePath().get())) {
                     heartIcon.setImage(new Image(getClass().getResourceAsStream("/icons/002-like-1.png")));
                 } else {
                     heartIcon.setImage(new Image(getClass().getResourceAsStream("/icons/001-like.png")));
                 }
+
             } else {
                 heartIcon.setImage(new Image(getClass().getResourceAsStream("/icons/001-like.png")));
             }
@@ -198,7 +205,7 @@ public class NameSearchFormController implements Initializable {
 
     public void addFavBtnAction(ActionEvent actionEvent) {
         if(DataFlowManager.getInstance().getUsername()!=null) {
-            methodLoader.heartAnimation(addFav, heartIcon, DataFlowManager.getInstance().getUsername(), String.valueOf(searchResultsTreeTableView.getSelectionModel().getSelectedItem().getValue().getFilePath()));
+            methodLoader.heartAnimation(heartIcon, DataFlowManager.getInstance().getUsername(), searchResultsTreeTableView.getSelectionModel().getSelectedItem().getValue().getFilePath().get(), searchResultsTreeTableView);
         } else {
             methodLoader.loginAlert(addFavBtn);
         }
@@ -206,6 +213,10 @@ public class NameSearchFormController implements Initializable {
     }
 
     public void searchBtnAction(ActionEvent actionEvent) {
+
+        if(DataFlowManager.getInstance().getUsername()!=null) {
+            dbConnector.addToHistory(DataFlowManager.getInstance().getUsername(), searchTxt.getText(), "Name", searchDirectoryTxt.getText());
+        }
 
         try {
             Runnable task = () -> {
