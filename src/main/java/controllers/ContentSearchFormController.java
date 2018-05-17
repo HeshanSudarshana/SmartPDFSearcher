@@ -126,7 +126,7 @@ public class ContentSearchFormController implements Initializable {
 
     public void addFavBtnAction(ActionEvent actionEvent) {
         if(DataFlowManager.getInstance().getUsername()!=null) {
-            methodLoader.heartAnimation(heartIcon, DataFlowManager.getInstance().getUsername(), String.valueOf(searchResultsTreeTableView.getSelectionModel().getSelectedItem().getValue().getFilePath()), searchResultsTreeTableView);
+            methodLoader.heartAnimation(heartIcon, DataFlowManager.getInstance().getUsername(), searchResultsTreeTableView.getSelectionModel().getSelectedItem().getValue().getFileName().get(), searchResultsTreeTableView.getSelectionModel().getSelectedItem().getValue().getFilePath().get(), searchResultsTreeTableView);
         } else {
             methodLoader.loginAlert(addFavBtn);
         }

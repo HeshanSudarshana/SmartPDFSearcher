@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #dacddc" xmlns="http://javafx.com/javafx/8.0.161" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.EditUserFormController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #dacddc" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.EditUserFormController">
 
     <children>
         <AnchorPane layoutX="23.0" prefHeight="82.0" prefWidth="82.0" style="-fx-background-color: #22a7f0;">
@@ -28,17 +28,17 @@
                     </font>
                 </Label>
             </children></AnchorPane>
-        <JFXTextField alignment="CENTER" focusColor="#22a7f0" labelFloat="true" layoutX="145.0" layoutY="109.0" prefHeight="30.0" prefWidth="310.0" promptText="Change Username" unFocusColor="BLACK" />
-        <JFXButton layoutX="183.0" layoutY="325.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="117.0" style="-fx-border-color: #22a7f0;" text="Save Changes" wrapText="true" />
-        <JFXButton layoutX="328.0" layoutY="325.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="95.0" style="-fx-border-color: #22a7f0;" text="Cancel" />
-        <JFXTextField alignment="CENTER" editable="false" focusColor="#22a7f0" labelFloat="true" layoutX="145.0" layoutY="253.0" prefHeight="30.0" prefWidth="310.0" promptText="Change the Workspace" />
-        <JFXButton layoutX="471.0" layoutY="248.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="42.0" text="..." wrapText="true">
+        <JFXTextField fx:id="usernameTxt" alignment="CENTER" focusColor="#22a7f0" labelFloat="true" layoutX="145.0" layoutY="109.0" prefHeight="30.0" prefWidth="310.0" promptText="Change Username" />
+        <JFXButton fx:id="saveChangesBtn" layoutX="183.0" layoutY="325.0" mnemonicParsing="false" onAction="#saveChangesBtnAction" prefHeight="40.0" prefWidth="117.0" style="-fx-border-color: #22a7f0;" text="Save Changes" wrapText="true" />
+        <JFXButton fx:id="cancelBtn" layoutX="328.0" layoutY="325.0" mnemonicParsing="false" onAction="#cancelBtnAction" prefHeight="40.0" prefWidth="95.0" style="-fx-border-color: #22a7f0;" text="Cancel" />
+        <JFXTextField fx:id="workspaceTxt" alignment="CENTER" editable="false" focusColor="#22a7f0" labelFloat="true" layoutX="145.0" layoutY="257.0" prefHeight="30.0" prefWidth="310.0" promptText="Change the Workspace" />
+        <JFXButton fx:id="browseBtn" layoutX="474.0" layoutY="252.0" mnemonicParsing="false" onAction="#browseBtnAction" prefHeight="40.0" prefWidth="42.0" text="..." wrapText="true">
             <font>
                 <Font size="15.0" />
             </font>
         </JFXButton>
-      <JFXPasswordField alignment="CENTER" focusColor="#22a7f0" labelFloat="true" layoutX="145.0" layoutY="159.0" prefHeight="30.0" prefWidth="310.0" promptText="Change Password" />
-      <JFXPasswordField alignment="CENTER" focusColor="#22a7f0" labelFloat="true" layoutX="145.0" layoutY="208.0" prefHeight="30.0" prefWidth="310.0" promptText="Confirm Password" />
+      <JFXPasswordField fx:id="passwordText" alignment="CENTER" focusColor="#22a7f0" labelFloat="true" layoutX="145.0" layoutY="161.0" prefHeight="30.0" prefWidth="310.0" promptText="Change Password" />
+      <JFXPasswordField fx:id="confirmPasswordTxt" alignment="CENTER" focusColor="#22a7f0" labelFloat="true" layoutX="145.0" layoutY="211.0" prefHeight="30.0" prefWidth="310.0" promptText="Confirm Password" />
     </children>
 
 </AnchorPane>

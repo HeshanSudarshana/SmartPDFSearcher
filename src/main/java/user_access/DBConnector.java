@@ -1,5 +1,7 @@
 package user_access;
 
+import javafx.beans.property.StringProperty;
+
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -82,7 +84,7 @@ public class DBConnector {
 
     //add favourites to the database
 
-    public void addToFavourites(String username, String path) {
+    public void addToFavourites(String username, String filename, String path) {
 
         Connection c = null;
         PreparedStatement stmt = null;
@@ -96,9 +98,10 @@ public class DBConnector {
             Statement statement = c.createStatement();
             statement.executeUpdate("PRAGMA foreign_keys = ON ;");
 
-            stmt = c.prepareStatement("INSERT INTO favourites (username, path) VALUES (?, ?);");
+            stmt = c.prepareStatement("INSERT INTO favourites (username, filename, path) VALUES (?, ?, ?);");
             stmt.setString(1, username);
-            stmt.setString(2, path);
+            stmt.setString(2, filename);
+            stmt.setString(3, path);
             stmt.executeUpdate();
             stmt.close();
 
@@ -303,9 +306,10 @@ public class DBConnector {
             ArrayList<FavouriteObject> list = new ArrayList<>();
 
             while (resultSet.next()) {
+                String filename = resultSet.getString("filename");
                 String path = resultSet.getString("path");
 
-                FavouriteObject temp = new FavouriteObject(username, path);
+                FavouriteObject temp = new FavouriteObject(username, filename, path);
                 list.add(temp);
             }
 

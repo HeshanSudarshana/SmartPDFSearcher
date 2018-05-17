@@ -49,7 +49,7 @@ public class PDFFile extends RecursiveTreeObject<PDFFile> {
     }
 
     public FavouriteObject PDFFiletoFavouriteObject(String username) {
-        FavouriteObject favouriteObject = new FavouriteObject(username, this.getFilePath().get());
+        FavouriteObject favouriteObject = new FavouriteObject(username, this.getFileName().get(), this.getFilePath().get());
         return favouriteObject;
     }
 }

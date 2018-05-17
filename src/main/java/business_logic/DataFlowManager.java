@@ -1,6 +1,7 @@
 package business_logic;
 
 import controllers.MethodLoader;
+import user_access.HistoryObject;
 
 public class DataFlowManager {
 
@@ -9,6 +10,7 @@ public class DataFlowManager {
     private int userID;
     private String workspace;
     private String previousStage;
+    private HistoryObject dataLoader;
 
     private DataFlowManager() { }
 
@@ -62,5 +64,13 @@ public class DataFlowManager {
 
     public void setPreviousStage(String previousStage) {
         this.previousStage = previousStage;
+    }
+
+    public HistoryObject getDataLoader() {
+        return dataLoader;
+    }
+
+    public void setDataLoader(HistoryObject dataLoader) {
+        this.dataLoader = dataLoader;
     }
 }

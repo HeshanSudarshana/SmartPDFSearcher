@@ -15,8 +15,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
+import jdk.management.resource.internal.inst.DatagramDispatcherRMHooks;
 import user_access.HistoryObject;
 
+import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -70,16 +72,7 @@ public class HistoryController implements Initializable{
 
         if(DataFlowManager.getInstance().getUsername()!=null) {
 
-            ArrayList<HistoryObject> historyList = userConfig.getHistory(DataFlowManager.getInstance().getUsername());
-            ObservableList<HistoryTableObject> historyTableObjectList = FXCollections.observableArrayList();
-            for (int i=0; i<historyList.size(); i++) {
-                historyTableObjectList.add(new HistoryTableObject(historyList.get(i)));
-            }
-
-            historyTableObjectTreeItem = new RecursiveTreeItem<>(historyTableObjectList, RecursiveTreeObject::getChildren);
-
-            historyTreeTableView.setRoot(historyTableObjectTreeItem);
-            historyTreeTableView.setShowRoot(false);
+            refreshTableContent();
         }
 
     }
@@ -88,12 +81,64 @@ public class HistoryController implements Initializable{
         methodLoader.loadNextForm(backBtn);
     }
 
-    public void backtoSearchBtnAction(ActionEvent actionEvent) {
+    public void backtoSearchBtnAction(ActionEvent actionEvent) throws IOException {
+        TreeItem<HistoryTableObject> historyTableObjectTreeItem = historyTreeTableView.getSelectionModel().getSelectedItem();
+        if(historyTableObjectTreeItem != null){
+            HistoryTableObject selectedObject = historyTreeTableView.getSelectionModel().getSelectedItem().getValue();
+            String username = DataFlowManager.getInstance().getUsername();
+            if(selectedObject.getSearch_type().get().equals("Name")) {
+                DataFlowManager.getInstance().setPreviousStage("name_search");
+            } else {
+                DataFlowManager.getInstance().setPreviousStage("content_search");
+            }
+            DataFlowManager.getInstance().setDataLoader(selectedObject.historyTableObjectToHistoryObject());
+            methodLoader.loadNextForm(backBtn);
+        } else {
+            methodLoader.selectFileAlert();
+        }
     }
 
     public void deleteBtnAction(ActionEvent actionEvent) {
+        TreeItem<HistoryTableObject> historyTableObjectTreeItem = historyTreeTableView.getSelectionModel().getSelectedItem();
+        if(historyTableObjectTreeItem != null){
+            HistoryTableObject selectedObject = historyTreeTableView.getSelectionModel().getSelectedItem().getValue();
+            String username = DataFlowManager.getInstance().getUsername();
+            if (methodLoader.confirmationAlert()) {
+                userConfig.deleteHistoryObject(username, selectedObject.getKeyword().get(), selectedObject.getSearch_type().get(), selectedObject.getTime().get(), selectedObject.getSearch_path().get());
+                refreshTableContent();
+            } else {
+                //do nothing
+            }
+        } else {
+            methodLoader.selectFileAlert();
+        }
     }
 
     public void deleteAllBtnAction(ActionEvent actionEvent) {
+        int numberOfItems = historyTreeTableView.getCurrentItemsCount();
+        if(numberOfItems > 0) {
+            String username = DataFlowManager.getInstance().getUsername();
+            if(methodLoader.confirmationAlert()) {
+                userConfig.deleteAllHistory(username);
+                refreshTableContent();
+            } else {
+                //do nothing
+            }
+        } else {
+            methodLoader.noItemAlert("No History", "There is no history to delete!");
+        }
+    }
+
+    public void refreshTableContent() {
+        ArrayList<HistoryObject> historyList = userConfig.getHistory(DataFlowManager.getInstance().getUsername());
+        ObservableList<HistoryTableObject> historyTableObjectList = FXCollections.observableArrayList();
+        for (int i=0; i<historyList.size(); i++) {
+            historyTableObjectList.add(new HistoryTableObject(historyList.get(i)));
+        }
+
+        historyTableObjectTreeItem = new RecursiveTreeItem<>(historyTableObjectList, RecursiveTreeObject::getChildren);
+
+        historyTreeTableView.setRoot(historyTableObjectTreeItem);
+        historyTreeTableView.setShowRoot(false);
     }
 }

@@ -93,16 +93,7 @@ public class AddUserFormController implements Initializable{
 
             User user = userConfig.getUserDetails(usernameTxt.getText());
 
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("User Added Successfully!");
-            alert.setHeaderText("User Successfully Registered!");
-            alert.setContentText("User - "+ usernameTxt.getText() +" added to the System.");
-            DialogPane dialogPane = alert.getDialogPane();
-            dialogPane.setMinHeight(Region.USE_PREF_SIZE);
-            dialogPane.setMinWidth(Region.USE_PREF_SIZE);
-            dialogPane.getStylesheets().add(getClass().getResource("/css/alert.css").toExternalForm());
-            dialogPane.getStyleClass().add("myDialog");
-            alert.showAndWait();
+            methodLoader.userAddedSuccessfully(usernameTxt);
 
             if (dataFlowManager.getUsername() != null) {
                 methodLoader.logoutAndLoginAlert(usernameTxt.getText(), user.getUserID(), user.getWorkspacePath(), "Do you want to logout from current session and login as " + usernameTxt.getText());

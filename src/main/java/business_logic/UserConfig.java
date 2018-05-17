@@ -6,6 +6,8 @@ import user_access.FavouriteObject;
 import user_access.HistoryObject;
 import user_access.User;
 
+import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class UserConfig {
@@ -24,6 +26,10 @@ public class UserConfig {
     public User getUserDetails(String username) {
         User user = dbConnector.getUserDetails(username);
         return user;
+    }
+
+    public void editUser(int userID, String username, String password, String workspace) {
+        dbConnector.updateUser(userID, username, password, workspace);
     }
 
     public void deleteUser (String username) {
@@ -56,8 +62,8 @@ public class UserConfig {
         dbConnector.deleteFavoriteObject(username, path);
     }
 
-    public void addFavouriteObject(String username, String path) {
-        dbConnector.addToFavourites(username, path);
+    public void addFavouriteObject(String username, String filename, String path) {
+        dbConnector.addToFavourites(username, filename, path);
     }
 
     public void deleteAllFavourites(String username) {

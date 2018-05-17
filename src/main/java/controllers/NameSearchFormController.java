@@ -2,14 +2,14 @@ package controllers;
 
 import business_logic.CrawlerConfig;
 import business_logic.DataFlowManager;
+import business_logic.PDFFile;
+import business_logic.UserConfig;
 import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import com.jfoenix.transitions.hamburger.HamburgerNextArrowBasicTransition;
-import business_logic.PDFFile;
 import javafx.animation.RotateTransition;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -26,6 +26,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import user_access.DBConnector;
 import user_access.FavouriteObject;
+import user_access.HistoryObject;
 
 import javax.xml.crypto.Data;
 import java.awt.*;
@@ -35,7 +36,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.ResourceBundle;
-import java.util.Set;
 
 public class NameSearchFormController implements Initializable {
 
@@ -108,11 +108,11 @@ public class NameSearchFormController implements Initializable {
     private CrawlerConfig crawlerConfig;
     private ObservableList<PDFFile> pdfFileObservableList;
     private ArrayList<File> copyFileList;
-    private DBConnector dbConnector;
+    private UserConfig userConfig;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        dbConnector = new DBConnector();
+        userConfig = new UserConfig();
         methodLoader = new MethodLoader();
         pdfFileObservableList = FXCollections.observableArrayList();
         copyFileList = new ArrayList<>();
@@ -144,6 +144,11 @@ public class NameSearchFormController implements Initializable {
 
         methodLoader.loadSideBar(sidebarBox);
 
+        if(DataFlowManager.getInstance().getDataLoader()!=null) {
+            setValuesGUI(DataFlowManager.getInstance().getDataLoader());
+            DataFlowManager.getInstance().setDataLoader(null);
+        }
+
         JFXTreeTableColumn <PDFFile, String> name = new JFXTreeTableColumn<PDFFile, String>("Name");
         name.setPrefWidth(218);
         name.setCellValueFactory(param -> param.getValue().getValue().getFileName());
@@ -164,7 +169,7 @@ public class NameSearchFormController implements Initializable {
             TreeItem<PDFFile> selectedItem = (TreeItem<PDFFile>) newValue;
             System.out.println("Selected Text : " + selectedItem.getValue().getFileName().get());
             if(DataFlowManager.getInstance().getUsername()!=null){
-                ArrayList<FavouriteObject> arrayList = dbConnector.getFavourites(DataFlowManager.getInstance().getUsername());
+                ArrayList<FavouriteObject> arrayList = userConfig.getFavourites(DataFlowManager.getInstance().getUsername());
                 ArrayList<String> pathList = new ArrayList<>();
                 for(FavouriteObject i: arrayList) {
                     pathList.add(i.getPath());
@@ -205,7 +210,7 @@ public class NameSearchFormController implements Initializable {
 
     public void addFavBtnAction(ActionEvent actionEvent) {
         if(DataFlowManager.getInstance().getUsername()!=null) {
-            methodLoader.heartAnimation(heartIcon, DataFlowManager.getInstance().getUsername(), searchResultsTreeTableView.getSelectionModel().getSelectedItem().getValue().getFilePath().get(), searchResultsTreeTableView);
+            methodLoader.heartAnimation(heartIcon, DataFlowManager.getInstance().getUsername(), searchResultsTreeTableView.getSelectionModel().getSelectedItem().getValue().getFileName().get(), searchResultsTreeTableView.getSelectionModel().getSelectedItem().getValue().getFilePath().get(), searchResultsTreeTableView);
         } else {
             methodLoader.loginAlert(addFavBtn);
         }
@@ -214,10 +219,33 @@ public class NameSearchFormController implements Initializable {
 
     public void searchBtnAction(ActionEvent actionEvent) {
 
-        if(DataFlowManager.getInstance().getUsername()!=null) {
-            dbConnector.addToHistory(DataFlowManager.getInstance().getUsername(), searchTxt.getText(), "Name", searchDirectoryTxt.getText());
-        }
 
+
+        if (searchDirectoryTxt.getText()==null || searchDirectoryTxt.getText().equals("")) {
+            methodLoader.selectDirectoryToSearchAlert();
+        } else {
+            if(DataFlowManager.getInstance().getUsername()!=null) {
+                userConfig.addHistoryObject(DataFlowManager.getInstance().getUsername(), searchTxt.getText(), "Name", searchDirectoryTxt.getText());
+
+                if (saveDirBtn.isSelected()) {
+                    String folderName = methodLoader.folderNameAlert(searchTxt.getText().toLowerCase());
+                    searchTask(folderName);
+                    methodLoader.copiedSuccessfully();
+                } else {
+                    searchTask(searchTxt.getText());
+                }
+
+            } else {
+                if(saveDirBtn.isSelected()) {
+                    methodLoader.loginAlert(searchBtn);
+                } else {
+                    searchTask(searchTxt.getText().toLowerCase());
+                }
+            }
+        }
+    }
+
+    public void searchTask(String folderName) {
         try {
             Runnable task = () -> {
 
@@ -226,9 +254,7 @@ public class NameSearchFormController implements Initializable {
                 copyFileList.clear();
                 pdfFileTreeItem = new RecursiveTreeItem<>(pdfFileObservableList, RecursiveTreeObject::getChildren);
 
-                Thread thread = Thread.currentThread();
-
-                crawlerConfig.crawlByName(saveDirBtn.isSelected(),searchBtn,pdfFileObservableList,copyFileList,searchResultsTreeTableView,pdfFileTreeItem);
+                crawlerConfig.crawlByName(saveDirBtn.isSelected(),searchBtn,pdfFileObservableList,copyFileList,searchResultsTreeTableView, pdfFileTreeItem, folderName);
 
                 Platform.runLater(() -> {
                     searchResultsTreeTableView.setRoot(pdfFileTreeItem);
@@ -243,8 +269,6 @@ public class NameSearchFormController implements Initializable {
         } catch (ConcurrentModificationException error) {
             //
         }
-
-
     }
 
     public void browseBtnAction(ActionEvent actionEvent) {
@@ -263,20 +287,11 @@ public class NameSearchFormController implements Initializable {
     public void openPDFFile(PDFFile pdfFile) {
         File fileToBeOpened = new File(pdfFile.getFilePath().get());
         System.out.println(String.valueOf(pdfFile.getFilePath()));
-        if(fileToBeOpened.exists()) {
-            if(Desktop.isDesktopSupported()) {
-                try {
-                    Desktop.getDesktop().open(fileToBeOpened);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            } else {
-                methodLoader.desktopEnvNotSupportedAlert();
-            }
-        } else {
-            methodLoader.fileDoesnotExistAlert();
-        }
+        methodLoader.openPDFFile(fileToBeOpened);
     }
 
-
+    public void setValuesGUI(HistoryObject historyObject) {
+        searchDirectoryTxt.setText(historyObject.getSearch_path());
+        searchTxt.setText(historyObject.getKeyword());
+    }
 }

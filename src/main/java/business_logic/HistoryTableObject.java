@@ -22,6 +22,11 @@ public class HistoryTableObject extends RecursiveTreeObject<HistoryTableObject> 
         this.setSearch_path(new SimpleStringProperty(historyObject.getSearch_path()));
     }
 
+    public HistoryObject historyTableObjectToHistoryObject() {
+        HistoryObject historyObject = new HistoryObject(DataFlowManager.getInstance().getUsername(), getKeyword().get(), getSearch_type().get(), getTime().get(), getSearch_path().get());
+        return historyObject;
+    }
+
 
     public StringProperty getUsername() {
         return username;

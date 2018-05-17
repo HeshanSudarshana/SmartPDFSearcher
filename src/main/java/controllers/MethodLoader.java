@@ -30,6 +30,7 @@ import user_access.DBConnector;
 import user_access.FavouriteObject;
 
 import javax.jws.soap.SOAPBinding;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLOutput;
@@ -114,7 +115,7 @@ public class MethodLoader {
             e1.printStackTrace();
         }
         Stage primaryStage = (Stage) btn.getScene().getWindow();
-        primaryStage.setTitle("Create Account");
+        primaryStage.setTitle("Update Account");
         Image userIcon = new Image(getClass().getResourceAsStream("/icons/open-book-icon-32.png"));
         primaryStage.getIcons().add(userIcon);
         primaryStage.resizableProperty().setValue(Boolean.FALSE);
@@ -130,7 +131,7 @@ public class MethodLoader {
             e1.printStackTrace();
         }
         Stage primaryStage = (Stage) btn.getScene().getWindow();
-        primaryStage.setTitle("Login");
+        primaryStage.setTitle("Delete Account");
         Image userIcon = new Image(getClass().getResourceAsStream("/icons/open-book-icon-32.png"));
         primaryStage.getIcons().add(userIcon);
         primaryStage.resizableProperty().setValue(Boolean.FALSE);
@@ -205,10 +206,18 @@ public class MethodLoader {
                 node.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
                     switch (node.getAccessibleText()) {
                         case "History":
-                            historyLoad(node);
+                            if(DataFlowManager.getInstance().getUsername()!=null) {
+                                historyLoad(node);
+                            } else {
+                                loginAlert((JFXButton) node);
+                            }
                             break;
                         case "Favourites":
-                            favouritesLoad((JFXButton) node);
+                            if(DataFlowManager.getInstance().getUsername()!=null) {
+                                favouritesLoad((JFXButton) node);
+                            } else {
+                                loginAlert((JFXButton) node);
+                            }
                             break;
                         case "Settings":
                             settingsLoad((JFXButton) node);
@@ -217,7 +226,9 @@ public class MethodLoader {
                             loginFormLoad((JFXButton) node);
                             break;
                         case "Logout":
-                            //logout code
+                            if(confirmationAlert()) {
+                                DataFlowManager.getInstance().logout();
+                            }
                             break;
                     }
                 });
@@ -239,10 +250,10 @@ public class MethodLoader {
 //        }
 //    }
 
-    public void heartAnimation(ImageView heartIcon, String username, String path, JFXTreeTableView<PDFFile> treeTableView) {
+    public void heartAnimation(ImageView heartIcon, String username, String filename,String path, JFXTreeTableView<PDFFile> treeTableView) {
         if(!isInTheDB(treeTableView)) {
             heartIcon.setImage(new Image(getClass().getResourceAsStream("/icons/002-like-1.png")));
-            userConfig.addFavouriteObject(username, path);
+            userConfig.addFavouriteObject(username, filename, path);
         } else {
             heartIcon.setImage(new Image(getClass().getResourceAsStream("/icons/001-like.png")));
             userConfig.deleteFavouriteObject(username, path);
@@ -351,7 +362,7 @@ public class MethodLoader {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Login Alert");
         alert.setGraphic(new ImageView(getClass().getResource("/icons/ic_power_settings_new_black_24dp_2x.png").toString()));
-        alert.setHeaderText(dataFlowManager.getUsername()+" Login?");
+        alert.setHeaderText("Login?");
         alert.setContentText("You need to be logged in to access that Feature! Do you want to Log in now?");
         DialogPane dialogPane1 = alert.getDialogPane();
         dialogPane1.setMinHeight(Region.USE_PREF_SIZE);
@@ -394,7 +405,7 @@ public class MethodLoader {
     public void selectFileAlert() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("File Not Selected!");
-        alert.setHeaderText("Please select a file from the list!");
+        alert.setHeaderText("Please select an item from the list!");
         alert.setContentText("");
         DialogPane dialogPane = alert.getDialogPane();
         dialogPane.setMinHeight(Region.USE_PREF_SIZE);
@@ -438,6 +449,94 @@ public class MethodLoader {
             nameSearchFormLoad(button);
         } else if (previous.equals("content_search")) {
             contentSearchFormLoad(button);
+        } else if (previous.equals("settings")) {
+            settingsLoad(button);
         }
+    }
+
+    public void noItemAlert(String titleTxt, String headerText) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(titleTxt);
+        alert.setHeaderText(headerText);
+        alert.setContentText("");
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.setMinHeight(Region.USE_PREF_SIZE);
+        dialogPane.setMinWidth(Region.USE_PREF_SIZE);
+        dialogPane.getStylesheets().add(getClass().getResource("/css/alert.css").toExternalForm());
+        dialogPane.getStyleClass().add("myDialog");
+        alert.showAndWait();
+    }
+
+    public boolean confirmationAlert() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText("Are you sure?");
+        alert.setContentText("");
+        DialogPane dialogPane1 = alert.getDialogPane();
+        dialogPane1.setMinHeight(Region.USE_PREF_SIZE);
+        dialogPane1.setMinWidth(Region.USE_PREF_SIZE);
+        dialogPane1.getStylesheets().add(getClass().getResource("/css/alert.css").toExternalForm());
+        dialogPane1.getStyleClass().add("myDialog");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void openPDFFile (File fileToBeOpened) {
+        if(fileToBeOpened.exists()) {
+            if(Desktop.isDesktopSupported()) {
+                try {
+                    Desktop.getDesktop().open(fileToBeOpened);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                desktopEnvNotSupportedAlert();
+            }
+        } else {
+            fileDoesnotExistAlert();
+        }
+    }
+
+    public void selectDirectoryToSearchAlert() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("No Directory!");
+        alert.setHeaderText("Please select a directory to search from the browser!");
+        alert.setContentText("");
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.setMinHeight(Region.USE_PREF_SIZE);
+        dialogPane.setMinWidth(Region.USE_PREF_SIZE);
+        dialogPane.getStylesheets().add(getClass().getResource("/css/alert.css").toExternalForm());
+        dialogPane.getStyleClass().add("myDialog");
+        alert.showAndWait();
+    }
+
+    public void userAddedSuccessfully(JFXTextField usernameTxt) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("User Added Successfully!");
+        alert.setHeaderText("User Successfully Registered!");
+        alert.setContentText("User - "+ usernameTxt.getText() +" added to the System.");
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.setMinHeight(Region.USE_PREF_SIZE);
+        dialogPane.setMinWidth(Region.USE_PREF_SIZE);
+        dialogPane.getStylesheets().add(getClass().getResource("/css/alert.css").toExternalForm());
+        dialogPane.getStyleClass().add("myDialog");
+        alert.showAndWait();
+    }
+
+    public void userUpdatedSuccessfully() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("User Updated!");
+        alert.setHeaderText("User Successfully Updated!");
+        alert.setContentText("");
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.setMinHeight(Region.USE_PREF_SIZE);
+        dialogPane.setMinWidth(Region.USE_PREF_SIZE);
+        dialogPane.getStylesheets().add(getClass().getResource("/css/alert.css").toExternalForm());
+        dialogPane.getStyleClass().add("myDialog");
+        alert.showAndWait();
     }
 }

@@ -52,6 +52,7 @@
             stmt = c.createStatement();
             String sql6 = "CREATE TABLE FAVOURITES " +
                     "(USERNAME      VARCHAR(50)     NOT NULL        REFERENCES  USER(USERNAME) ON UPDATE CASCADE ON DELETE CASCADE," +
+                    " FILENAME      VARCHAR         NOT NULL, " +
                     " PATH          VARCHAR         NOT NULL, " +
                     " PRIMARY KEY (USERNAME, PATH))";
             stmt.executeUpdate(sql6);

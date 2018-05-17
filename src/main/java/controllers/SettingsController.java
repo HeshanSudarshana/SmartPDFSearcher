@@ -1,11 +1,14 @@
 package controllers;
 
+import business_logic.DataFlowManager;
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.HBox;
 
+import javax.xml.crypto.Data;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -35,6 +38,7 @@ public class SettingsController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         methodLoader = new MethodLoader();
+        DataFlowManager.getInstance().setPreviousStage("settings");
 
     }
 
@@ -46,7 +50,11 @@ public class SettingsController implements Initializable {
 
     public void userSettingsBtnAction(ActionEvent actionEvent) {
 
-        methodLoader.accountSettingsFormLoad(userSettingsBtn);
+        if(DataFlowManager.getInstance().getUsername() != null) {
+            methodLoader.accountSettingsFormLoad(userSettingsBtn);
+        } else {
+            methodLoader.loginAlert(userSettingsBtn);
+        }
 
     }
 
@@ -62,9 +70,9 @@ public class SettingsController implements Initializable {
 
     }
 
-    public void backBtnAction(ActionEvent actionEvent) {
+    public void backBtnAction(ActionEvent actionEvent) throws IOException {
 
-        methodLoader.nameSearchFormLoad(backBtn);
+        methodLoader.loadNextForm(backBtn);
 
     }
 }

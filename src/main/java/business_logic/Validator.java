@@ -184,4 +184,5 @@ public class Validator {
         dialogPane.getStyleClass().add("myDialog");
         alert.showAndWait();
     }
+
 }
