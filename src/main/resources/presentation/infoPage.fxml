@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="400.0" maxWidth="600.0" minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.InfoPageController">
+   <children>
+      <ImageView fitHeight="255.0" fitWidth="340.0" layoutX="131.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../icons/73e1af214e6b6a0e48c44435018fb874.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="157.0" layoutY="269.0" text="Smart PDF Searcher">
+         <font>
+            <Font name="Serif Bold" size="32.0" />
+         </font>
+      </Label>
+      <Label layoutX="271.0" layoutY="313.0" text="Version 1.0" />
+      <Label layoutX="460.0" layoutY="369.0" text="By M.A.K.H. Sudarshana" />
+      <JFXButton fx:id="backBtn" focusTraversable="false" layoutY="359.0" mnemonicParsing="false" onAction="#backBtnAction" prefHeight="37.0" prefWidth="96.0" text="Back" />
+   </children>
+</AnchorPane>

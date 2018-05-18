@@ -12,14 +12,19 @@
    <children>
       <AnchorPane fx:id="panel_deco" layoutX="64.0" prefHeight="600.0" prefWidth="318.0" style="-fx-background-color: #22a7f0;">
          <children>
-            <ImageView fitHeight="312.0" fitWidth="312.0" layoutX="18.0" layoutY="216.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="312.0" fitWidth="312.0" layoutX="17.0" layoutY="178.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../icons/open-book-icon-32.png" />
                </image>
             </ImageView>
-            <Label contentDisplay="CENTER" layoutX="3.0" layoutY="96.0" prefHeight="136.0" prefWidth="342.0" text="Smart PDF Searcher" textAlignment="CENTER" wrapText="true">
+            <Label contentDisplay="CENTER" layoutX="3.0" layoutY="52.0" prefHeight="136.0" prefWidth="342.0" text="Smart PDF Searcher" textAlignment="CENTER" wrapText="true">
                <font>
                   <Font name="Serif Bold" size="40.0" />
+               </font>
+            </Label>
+            <Label contentDisplay="CENTER" layoutX="36.0" layoutY="422.0" prefHeight="136.0" prefWidth="276.0" text="All your PDFs are one click away.." textAlignment="CENTER" wrapText="true">
+               <font>
+                  <Font name="Times New Roman Italic" size="19.0" />
                </font>
             </Label>
          </children></AnchorPane>

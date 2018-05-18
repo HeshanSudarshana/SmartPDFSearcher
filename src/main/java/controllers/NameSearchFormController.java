@@ -1,6 +1,6 @@
 package controllers;
 
-import business_logic.CrawlerConfig;
+import business_logic.CrawlerConfigName;
 import business_logic.DataFlowManager;
 import business_logic.PDFFile;
 import business_logic.UserConfig;
@@ -24,12 +24,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import user_access.DBConnector;
 import user_access.FavouriteObject;
 import user_access.HistoryObject;
 
-import javax.xml.crypto.Data;
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -105,7 +102,7 @@ public class NameSearchFormController implements Initializable {
     private RotateTransition rt;
     private MethodLoader methodLoader;
     private TreeItem<PDFFile> pdfFileTreeItem;
-    private CrawlerConfig crawlerConfig;
+    private CrawlerConfigName crawlerConfigName;
     private ObservableList<PDFFile> pdfFileObservableList;
     private ArrayList<File> copyFileList;
     private UserConfig userConfig;
@@ -165,24 +162,7 @@ public class NameSearchFormController implements Initializable {
         searchResultsTreeTableView.setPlaceholder(new Label("No PDFs to show!"));
 
         searchResultsTreeTableView.getSelectionModel().selectedItemProperty().addListener((ChangeListener) (observable, oldValue, newValue) -> {
-
-            TreeItem<PDFFile> selectedItem = (TreeItem<PDFFile>) newValue;
-            System.out.println("Selected Text : " + selectedItem.getValue().getFileName().get());
-            if(DataFlowManager.getInstance().getUsername()!=null){
-                ArrayList<FavouriteObject> arrayList = userConfig.getFavourites(DataFlowManager.getInstance().getUsername());
-                ArrayList<String> pathList = new ArrayList<>();
-                for(FavouriteObject i: arrayList) {
-                    pathList.add(i.getPath());
-                }
-                if(pathList.contains(selectedItem.getValue().getFilePath().get())) {
-                    heartIcon.setImage(new Image(getClass().getResourceAsStream("/icons/002-like-1.png")));
-                } else {
-                    heartIcon.setImage(new Image(getClass().getResourceAsStream("/icons/001-like.png")));
-                }
-
-            } else {
-                heartIcon.setImage(new Image(getClass().getResourceAsStream("/icons/001-like.png")));
-            }
+            methodLoader. realTimeFavLoader(newValue, heartIcon);
         });
 
 //        Set<Thread> threadSet = Thread.getAllStackTraces().keySet(); Thread[] threadArray = threadSet.toArray(new Thread[threadSet.size()]); for (Thread t : threadArray) { if (t.isAlive() && !t.isDaemon()) { System.out.println(t); } }
@@ -249,12 +229,12 @@ public class NameSearchFormController implements Initializable {
         try {
             Runnable task = () -> {
 
-                crawlerConfig = new CrawlerConfig(searchDirectoryTxt.getText(), searchTxt.getText());
+                crawlerConfigName = new CrawlerConfigName(searchDirectoryTxt.getText(), searchTxt.getText());
                 pdfFileObservableList.clear();
                 copyFileList.clear();
                 pdfFileTreeItem = new RecursiveTreeItem<>(pdfFileObservableList, RecursiveTreeObject::getChildren);
 
-                crawlerConfig.crawlByName(saveDirBtn.isSelected(),searchBtn,pdfFileObservableList,copyFileList,searchResultsTreeTableView, pdfFileTreeItem, folderName);
+                crawlerConfigName.crawlByName(saveDirBtn.isSelected(), pdfFileObservableList,copyFileList,searchResultsTreeTableView, pdfFileTreeItem, folderName);
 
                 Platform.runLater(() -> {
                     searchResultsTreeTableView.setRoot(pdfFileTreeItem);

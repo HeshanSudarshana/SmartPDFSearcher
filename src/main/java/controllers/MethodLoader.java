@@ -6,18 +6,13 @@ import business_logic.UserConfig;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTreeTableView;
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import javafx.animation.RotateTransition;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.DialogPane;
-import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -29,11 +24,9 @@ import javafx.util.Duration;
 import user_access.DBConnector;
 import user_access.FavouriteObject;
 
-import javax.jws.soap.SOAPBinding;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -538,5 +531,41 @@ public class MethodLoader {
         dialogPane.getStylesheets().add(getClass().getResource("/css/alert.css").toExternalForm());
         dialogPane.getStyleClass().add("myDialog");
         alert.showAndWait();
+    }
+
+    public void realTimeFavLoader(Object newValue, ImageView heartIcon) {
+        TreeItem<PDFFile> selectedItem = (TreeItem<PDFFile>) newValue;
+        System.out.println("Selected Text : " + selectedItem.getValue().getFileName().get());
+        if(DataFlowManager.getInstance().getUsername()!=null){
+            ArrayList<FavouriteObject> arrayList = userConfig.getFavourites(DataFlowManager.getInstance().getUsername());
+            ArrayList<String> pathList = new ArrayList<>();
+            for(FavouriteObject i: arrayList) {
+                pathList.add(i.getPath());
+            }
+            if(pathList.contains(selectedItem.getValue().getFilePath().get())) {
+                heartIcon.setImage(new Image(getClass().getResourceAsStream("/icons/002-like-1.png")));
+            } else {
+                heartIcon.setImage(new Image(getClass().getResourceAsStream("/icons/001-like.png")));
+            }
+
+        } else {
+            heartIcon.setImage(new Image(getClass().getResourceAsStream("/icons/001-like.png")));
+        }
+    }
+
+    public void loadInfoPage(JFXButton btn) {
+        Parent root1 = null;
+        try {
+            root1 = FXMLLoader.load(getClass().getResource("/presentation/infoPage.fxml"));
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+        Stage primaryStage1 = (Stage) btn.getScene().getWindow();
+        primaryStage1.setTitle("Info");
+        Image userIcon1 = new Image(getClass().getResourceAsStream("/icons/open-book-icon-32.png"));
+        primaryStage1.getIcons().add(userIcon1);
+        primaryStage1.resizableProperty().setValue(Boolean.FALSE);
+        primaryStage1.setScene(new Scene(root1, 600, 400));
+        primaryStage1.show();
     }
 }

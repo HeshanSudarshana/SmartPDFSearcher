@@ -66,7 +66,7 @@ public class SettingsController implements Initializable {
 
     public void infoBtnAction(ActionEvent actionEvent) {
 
-        //documentation
+        methodLoader.loadInfoPage(infoBtn);
 
     }
 

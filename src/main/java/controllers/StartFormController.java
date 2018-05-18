@@ -115,6 +115,9 @@ public class StartFormController implements Initializable {
     }
 
     public void infoBtnAction(ActionEvent actionEvent) {
+
+        methodLoader.loadInfoPage(infoBtn);
+
     }
 
 }
