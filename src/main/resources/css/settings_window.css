@@ -1,8 +1,8 @@
 .h_box {
     /*-fx-background-color: #dacddc;*/
-    -fx-background-color: #22a7f0;
+    -fx-background-color: #dacddc;
     -fx-border-width: 4;
-    -fx-border-color: #22a7f0;
+    -fx-border-color: #dacddc;
 }
 
 .button {

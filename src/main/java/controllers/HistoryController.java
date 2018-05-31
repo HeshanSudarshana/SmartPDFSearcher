@@ -15,10 +15,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
-import jdk.management.resource.internal.inst.DatagramDispatcherRMHooks;
 import user_access.HistoryObject;
 
-import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
